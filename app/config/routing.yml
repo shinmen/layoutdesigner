@@ -1,0 +1,8 @@
+template_designer_layout:
+    resource: "@TemplateDesignerLayoutBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+
+
+

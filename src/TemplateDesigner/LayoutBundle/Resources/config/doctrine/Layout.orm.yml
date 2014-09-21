@@ -1,0 +1,11 @@
+TemplateDesigner\LayoutBundle\Entity\Layout:
+    type: entity
+    table: null
+    repositoryClass: TemplateDesigner\LayoutBundle\Entity\LayoutRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    lifecycleCallbacks: {  }

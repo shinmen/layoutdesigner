@@ -1,0 +1,111 @@
+{% extends '::base.html.twig' %}
+{% block stylesheets %}
+{{parent()}}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/templatedesignerlayout/css/app.css')}}">
+{% endblock %}
+{% block body -%}
+{# mobile/tablette/desktop
+dg row
+boucle
+layout > content >layout
+si multiple
+content >layout_start>sub content>layout_end #}
+
+<div class="toolbox">
+<ol id="selectable">
+	<li class="ui-state-default">1</li>
+	<li class="ui-state-default">2</li>
+	<li class="ui-state-default">3</li>
+	<li class="ui-state-default">4</li>
+	<li class="ui-state-default">5</li>
+	<li class="ui-state-default">6</li>
+	<li class="ui-state-default">7</li>
+	<li class="ui-state-default">8</li>
+	<li class="ui-state-default">9</li>
+	<li class="ui-state-default">10</li>
+	<li class="ui-state-default">11</li>
+	<li class="ui-state-default">12</li>
+</ol>
+<div class="btn btn-ok">ok</div>
+<div id="row" class="draggable">row</div>
+<div class="draggable col"></div>
+<div class="btn btn-convert">convert</div>
+</div>
+<div id="root">
+	<div class="container droppable"></div>
+</div>
+
+
+
+{% endblock %}
+{% block javascripts %}
+{{parent()}}
+<script type="text/javascript">
+var selectedTab = [];
+var layout = [];
+var i = 0;
+ $(function() {
+ 	var options_drag = {cursor: "move"};
+ 	var options_drop = {
+ 	   	hoverClass: "ui-state-hover",
+		drop: function( event, ui ) {
+			if(ui.draggable.attr('id')=="row"){
+				ui.draggable.addClass('row droppable').html('');
+				$('.toolbox').append('<div id="row" class="draggable">row</div>');
+			}else{
+				ui.draggable.removeClass('col').addClass('droppable');
+		
+				$('.toolbox').remove('.col.draggable');
+				$('.toolbox').append('<div class="col draggable"></div>');
+			}
+			selectedTab.length = 0;
+			$(this).append(ui.draggable);
+			ui.draggable.removeAttr('id');
+			ui.draggable.removeAttr('style');
+			$('.draggable').draggable(options_drag);
+			$('.droppable').droppable(options_drop);
+			selectedTab = [];
+		}
+	}
+    $( "#selectable" ).selectable({
+        selected: function( event, ui ) {
+            // selectedTab.push(ui.selected);
+        },
+    });
+    $('.btn-ok').on('click',function(){
+    	var l = $('.ui-selected').length;
+    	$('.draggable.col').removeClass('col').addClass('column col-xs-'+l).text(l);
+    	$('.toolbox .col.draggable').remove();
+    })
+    $('.draggable').draggable(options_drag);
+    $('.droppable').droppable(options_drop);
+    $('.btn-convert').on('click',function(){
+    	container = $('.container');
+    	rec(container);
+    	console.log(layout);
+    })
+});
+
+function rec(container){
+	if(container.parent().attr('id')!='root'){
+		if(container.hasClass('.container')){
+			var obj = {'container':[]};
+		}else if(container.hasClass('row')){
+			var obj = {'row':[]};
+		}else if(container.hasClass('column')){
+			var classes = container.attr('class');
+			var cols = classes.match('col-[a-z]-[0-9]');
+			var obj = {cols:[]};
+		}
+		i++;
+	}
+	var sub = container.children();
+	if(sub.length >0){
+		
+		sub.each(function(){
+			rec($(this));
+		})
+	}
+}
+</script>
+{% endblock %}
