@@ -28,7 +28,7 @@ content >layout_start>sub content>layout_end #}
 </ol>
 <div class="btn btn-ok">ok</div>
 <div id="row" class="draggable">row</div>
-<div class="draggable col"></div>
+<div id="col" class="draggable"></div>
 <div class="btn btn-convert">convert</div>
 </div>
 <div id="root">
@@ -41,10 +41,8 @@ content >layout_start>sub content>layout_end #}
 {% block javascripts %}
 {{parent()}}
 <script type="text/javascript">
-var selectedTab = [];
-var layout = [];
-var i = 0;
-// var obj = {};
+var layout = {};
+
  $(function() {
  	var options_drag = {cursor: "move"};
  	var options_drop = {
@@ -54,18 +52,18 @@ var i = 0;
 				ui.draggable.addClass('row droppable').html('');
 				$('.toolbox').append('<div id="row" class="draggable">row</div>');
 			}else{
-				ui.draggable.removeClass('col').addClass('droppable');
-		
-				$('.toolbox').remove('.col.draggable');
-				$('.toolbox').append('<div class="col draggable"></div>');
+				ui.draggable.addClass('droppable');
+				$('#col').each(function(){
+					$(this).remove();
+				})
+				// $('.toolbox').remove('.col.draggable');
+				$('.toolbox').append('<div id="col" class="draggable"></div>');
 			}
-			selectedTab.length = 0;
 			$(this).append(ui.draggable);
 			ui.draggable.removeAttr('id');
 			ui.draggable.removeAttr('style');
 			$('.draggable').draggable(options_drag);
 			$('.droppable').droppable(options_drop);
-			selectedTab = [];
 		}
 	}
     $( "#selectable" ).selectable({
@@ -75,36 +73,27 @@ var i = 0;
     });
     $('.btn-ok').on('click',function(){
     	var l = $('.ui-selected').length;
-    	$('.draggable.col').removeClass('col').addClass('column col-xs-'+l).text(l);
-    	$('.toolbox .col.draggable').remove();
+    	$('#col').addClass('column col-xs-'+l).text(l);
+    	// $('.toolbox .col.draggable').remove();
     })
     $('.draggable').draggable(options_drag);
     $('.droppable').droppable(options_drop);
 
     $('.btn-convert').on('click',function(){
     	container = $('.container.root');
-    	rec(container,null);
-    	console.log(obj);
+    	rec(container,layout);
     })
 });
 
-function rec(container,parent){
-		// console.log(container);
-		if(parent != null ){
+function rec(container,obj){
 
-		}else{
-			obj.tag = container.get(0).nodeName;
-			obj.cssClass = container.attr('class');
-			obj.children = [];
-		}
+		obj.tag = container.get(0).nodeName;
+		obj.cssClass = container.attr('class');
+		obj.children = [];
 		
-		// console.log(obj);
 		if(container.children().length>0){
 			container.children().each(function(){
 				var child = {};
-				child.tag = $(this).get(0).nodeName;
-				child.cssClass = $(this).attr('class');
-				child.children= [];
 				var children = obj.children;
 				children.push(child);
 				rec($(this),child);
