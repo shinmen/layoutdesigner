@@ -32,7 +32,7 @@ content >layout_start>sub content>layout_end #}
 <div class="btn btn-convert">convert</div>
 </div>
 <div id="root">
-	<div class="container droppable"></div>
+	<div class="root container droppable"></div>
 </div>
 
 
@@ -44,6 +44,7 @@ content >layout_start>sub content>layout_end #}
 var selectedTab = [];
 var layout = [];
 var i = 0;
+// var obj = {};
  $(function() {
  	var options_drag = {cursor: "move"};
  	var options_drop = {
@@ -79,33 +80,36 @@ var i = 0;
     })
     $('.draggable').draggable(options_drag);
     $('.droppable').droppable(options_drop);
+
     $('.btn-convert').on('click',function(){
-    	container = $('.container');
-    	rec(container);
-    	console.log(layout);
+    	container = $('.container.root');
+    	rec(container,null);
+    	console.log(obj);
     })
 });
 
-function rec(container){
-	if(container.parent().attr('id')!='root'){
-		if(container.hasClass('.container')){
-			var obj = {'container':[]};
-		}else if(container.hasClass('row')){
-			var obj = {'row':[]};
-		}else if(container.hasClass('column')){
-			var classes = container.attr('class');
-			var cols = classes.match('col-[a-z]-[0-9]');
-			var obj = {cols:[]};
+function rec(container,parent){
+		// console.log(container);
+		if(parent != null ){
+
+		}else{
+			obj.tag = container.get(0).nodeName;
+			obj.cssClass = container.attr('class');
+			obj.children = [];
 		}
-		i++;
-	}
-	var sub = container.children();
-	if(sub.length >0){
 		
-		sub.each(function(){
-			rec($(this));
-		})
-	}
+		// console.log(obj);
+		if(container.children().length>0){
+			container.children().each(function(){
+				var child = {};
+				child.tag = $(this).get(0).nodeName;
+				child.cssClass = $(this).attr('class');
+				child.children= [];
+				var children = obj.children;
+				children.push(child);
+				rec($(this),child);
+			})
+		};
 }
 </script>
 {% endblock %}
