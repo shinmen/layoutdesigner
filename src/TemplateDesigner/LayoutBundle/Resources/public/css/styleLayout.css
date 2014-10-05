@@ -1,0 +1,12 @@
+.container,.row,.column{border: 1px black solid;}
+.container.root {height: 300px;}
+.row {height: 150px;}
+.column {height: 60px;}
+.toolbox   {float:left; width: 13%;}
+
+#garbage {height: 200px; width: 300px;}
+
+#selectable .ui-selecting { background: #FECA40; }
+#selectable .ui-selected { background: #F39814; color: white; }
+#selectable { list-style-type: none; margin: 0; padding: 0; width: 10%;}
+#selectable li { margin: 3px; padding: 1px; float: left; width: 30px; height: 30px; font-size: 1em; text-align: center; }

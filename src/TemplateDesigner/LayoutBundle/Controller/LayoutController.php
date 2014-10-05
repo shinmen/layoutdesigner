@@ -3,6 +3,7 @@
 namespace TemplateDesigner\LayoutBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -62,6 +63,62 @@ class LayoutController extends Controller
         );
     }
 
+        /**
+     * Creates a new Layout entity.
+     *
+     * @Route("/transform", name="layout_transform")
+     */
+    public function transformAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $layout = $request->get('layout');
+        $name = $request->get('name');
+        $tag = $layout['tag'];
+        $temp = $layout['cssClass'];
+        $children = $layout['children'];
+        preg_match('[container]', $temp,$matches);
+        $i = 0;
+        $root = new Layout();
+        $root->setCssClasses($matches);
+        $root->setTag($tag);
+        $root->setPosition($i);
+        $root->setName($name);
+        $em->persist($root);
+        $em->flush();
+        $this->rec($children,$root,$root,$i);
+        return new Response();
+    }
+
+    private function rec($children,$root,$parent,$i){
+        $em = $this->getDoctrine()->getManager();
+        
+        foreach ($children as $child) {
+            ++$i;
+            $tag = $child['tag'];
+            $temp = $child['cssClass'];
+            preg_match('[container]', $temp,$matches);
+            if(empty($matches)){
+                preg_match('[row]', $temp,$matches);
+            }
+            if(empty($matches)){
+                preg_match_all('/col-[a-z]+-[0-9]+/', $temp,$matches);
+                $matches[0][]='column';
+            }
+            $new = new Layout();
+            $new->setCssClasses($matches);
+            $new->setTag($tag);
+            $new->setPosition($i);
+            $new->setRoot($root);
+            $new->setParent($parent);
+            $em->persist($new);
+            $em->flush();
+            if(isset($child['children'])){
+                $this->rec($child['children'],$root,$new,$i+2);
+            }
+        }
+    }
+
+
     /**
      * Creates a form to create a Layout entity.
      *
@@ -110,7 +167,7 @@ class LayoutController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('TemplateDesignerLayoutBundle:Layout')->find($id);
+        $entity = $em->getRepository('TemplateDesignerLayoutBundle:Layout')->find(17);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Layout entity.');

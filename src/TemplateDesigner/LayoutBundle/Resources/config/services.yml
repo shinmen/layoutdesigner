@@ -1,0 +1,6 @@
+services:
+  layout.twig.extension:
+    class: TemplateDesigner\LayoutBundle\Twig\TwigExtension # <--- here
+    arguments: ["@doctrine.orm.entity_manager","@service_container"]
+    tags:
+      - { name: twig.extension }

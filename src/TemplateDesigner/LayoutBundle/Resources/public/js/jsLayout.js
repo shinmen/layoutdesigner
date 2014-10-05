@@ -1,74 +1,9 @@
-{% extends '::base.html.twig' %}
-{% block stylesheets %}
-{{parent()}}
-<link rel="stylesheet" type="text/css" href="{{asset('bundles/templatedesignerlayout/css/styleLayout.css')}}">
-{% endblock %}
-{% block body -%}
-
-<div class="toolbox">
-<form action="#" method="#">
-<label for="name">Name:<input type="text" name="name"></label>
-<select>
-	<option value="div">Div</option>
-	<option value="nav">Nav</option>
-	<option value="article">Article</option>
-	<option value="section">Section</option>
-	<option value="p">Paragraph</option>
-</select>
-</form>
-<ol id="selectable">
-	<li class="ui-state-default">1</li>
-	<li class="ui-state-default">2</li>
-	<li class="ui-state-default">3</li>
-	<li class="ui-state-default">4</li>
-	<li class="ui-state-default">5</li>
-	<li class="ui-state-default">6</li>
-	<li class="ui-state-default">7</li>
-	<li class="ui-state-default">8</li>
-	<li class="ui-state-default">9</li>
-	<li class="ui-state-default">10</li>
-	<li class="ui-state-default">11</li>
-	<li class="ui-state-default">12</li>
-</ol>
-
-<div class="btn btn-ok-m">Mobile</div>
-<div class="btn btn-ok-t">Tablette</div>
-<div class="btn btn-ok-d">Desktop</div>
-<div class="btn btn-ok-ld">Large Desktop</div>
-<div class="btn btn-ok-hm">Hidden Mobile</div>
-<div class="btn btn-ok-ht">Hidden Tablette</div>
-<div class="btn btn-ok-hd">Hidden Desktop</div>
-<div class="btn btn-ok-hld">Hidden Large Desktop</div>
-{# <div class="btn btn-ok-vm">Only visible Mobile</div>
-<div class="btn btn-ok-vt">Only visible Tablette</div>
-<div class="btn btn-ok-vd">Only visible Desktop</div>
-<div class="btn btn-ok-vld">Only visible Large Desktop</div> #}
-<div class="containers">
-<div id="col" class="draggable"></div>
-<div id="row" class="draggable">Row</div>
-<div id="container" class="draggable">container</div>
-</div>
-
-<div class="btn btn-transform">transform</div>
-</div>
-<div id="root">
-	<div class="root container droppable"></div>
-</div>
-
-
-
-{% endblock %}
-{% block javascripts %}
-{{parent()}}
-<script type="text/javascript">
 var layout = {};
 var node = "div";
-
-function deleteElem(event,elem){
+var buttons = {};
+function deleteElem(elem){
 	elem.remove();
-	event.stopPropagation();
 }
-
 function addLink(elem){
 	elem.append('<a href="#" onclick="deleteElem($(this).parent()); return false;">delete</a>');
 }
@@ -86,14 +21,18 @@ function addClassHidden(elem,type){
     $('#col').addClass('hidden-'+type);
 }
 
-$(function() {
+function delElem(elem){
+	elem.remove();
+}
+
+ $(function() {
  	var options_drag = {cursor: "move",revert:true};
  	var options_drop = {
  	   	hoverClass: "ui-state-hover",
  	   	greedy: true,
 		drop: function( event, ui ) {
 			if(ui.draggable.attr('id')=="row"){
-				ui.draggable.addClass('row droppable').attr('ondblclick','deleteElem(event,$(this)); return false;').html('');
+				ui.draggable.addClass('row droppable').attr('ondblclick','delElem($(this)); return false;').html('');
 				$(this).height($(this).height()+200+'px');
 				$(this).parentsUntil('#root').each(function(){
 					$(this).height($(this).height()+200+'px');
@@ -101,11 +40,11 @@ $(function() {
 
 				$('.toolbox .containers').append('<div id="row" class="draggable">Row</div>');
 			}else if(ui.draggable.attr('id')=="container"){
-				ui.draggable.addClass('container droppable').attr('ondblclick','deleteElem(event,$(this)); return false;').html('');
+				ui.draggable.addClass('container droppable').attr('ondblclick','delElem($(this)); return false;').html('');
 				$('.toolbox .containers').append('<div id="container" class="draggable">Container</div>');
 			}
 			else{
-				ui.draggable.addClass('droppable').attr('ondblclick','deleteElem(event,$(this)); return false;').html('');
+				ui.draggable.addClass('droppable').attr('ondblclick','delElem($(this)); return false;').html('');
 				
 				// add 50px height every two times
 				if($(this).children().length %2 == 0){
@@ -127,13 +66,11 @@ $(function() {
 			$('.droppable').droppable(options_drop);
 		}
 	}
-
     $( "#selectable" ).selectable({
         selected: function( event, ui ) {
             // selectedTab.push(ui.selected);
         },
     });
-
 
     $('form select').on('change',function(){
     	node = $('form select option:selected').val();
@@ -212,5 +149,3 @@ function rec(container,obj){
 			})
 		};
 }
-</script>
-{% endblock %}

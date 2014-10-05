@@ -12,4 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class LayoutRepository extends EntityRepository
 {
+
+	public function findLayoutWitOptions($root,$position){
+		$qb= $this->getEntityManager()->createQueryBuilder();
+
+        $qb ->select('l')
+            ->from('TemplateDesignerLayoutBundle:Layout','l')
+            ->join('l.root','r')
+            ->where($qb->expr()->eq('r.name',':root'))
+            ->andWhere($qb->expr()->eq('l.position',':position'))
+            ->setParameters(array('root'=>$root,'position'=>$position));
+            return $qb->getQuery()->getOneOrNullResult();
+	}
 }

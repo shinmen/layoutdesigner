@@ -1,0 +1,3 @@
+tool_tool_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: ToolToolBundle:Default:index }

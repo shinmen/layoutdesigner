@@ -1,6 +1,6 @@
 TemplateDesigner\LayoutBundle\Entity\Layout:
     type: entity
-    table: null
+    table: layout_designer
     repositoryClass: TemplateDesigner\LayoutBundle\Entity\LayoutRepository
     id:
         id:
@@ -8,4 +8,54 @@ TemplateDesigner\LayoutBundle\Entity\Layout:
             id: true
             generator:
                 strategy: AUTO
+        
+    fields:
+        name:
+            type: string
+            length: 250
+            nullable: true
+        cssClasses:
+            type: array
+        tag:
+            type: string
+            length: 250
+        cssId:
+            type: string
+            length: 250
+            nullable: true
+        render:
+            type: string
+            length: 250
+            nullable: true
+        include:
+            type: string
+            length: 250
+            nullable: true
+        custom:
+            type: string
+            length: 100
+        engine: 
+            type: string
+            length: 250
+        position:
+            type: smallint
+            nullable: true
+    oneToMany:
+            subs:
+                targetEntity: Layout
+                mappedBy: root
+            children:
+                targetEntity: Layout
+                mappedBy: parent
+            contents:
+                targetEntity: ContentSubjectInterface
+                mappedBy: layout
+    manyToOne:
+            parent:
+                targetEntity: Layout
+                inversedBy: children
+            root:
+                targetEntity: Layout
+                inversedBy: subs
+
     lifecycleCallbacks: {  }

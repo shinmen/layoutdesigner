@@ -1,28 +1,11 @@
 {% extends '::base.html.twig' %}
 
+
 {% block body -%}
-    <h1>Layout</h1>
 
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-        </tbody>
-    </table>
+{{render_layout('root')|raw}}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('layout') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('layout_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    {# {{layout_start('root',2)|raw}}
+    youhou
+    {{layout_end('root',3)|raw}} #}
 {% endblock %}

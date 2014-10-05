@@ -1,0 +1,28 @@
+{% macro layout(parent,params) %}
+    {% for child in parent.children %}
+    	<{{child.tag}} class="{{child.cssClasses}}">
+    		{% if child.include is not null %}
+    			{% include child.include %}
+    		{% elseif child.render is not null %}
+                {% if child.custom is not null %}
+                    {% include 'TemplateDesignerLayoutBundle:Layout:renderHelp.html.twig'%}
+                {% else %}
+                    {% render(controller(child.render))%}
+                {% endif %}
+    		{% endif %}
+            {{_self.layout(child,params)}}
+    	</{{child.tag}}>
+    {% endfor %}
+{% endmacro %}
+
+{% import _self as layout %}
+{# if root == true, display root container #}
+{% if root is sameas(true) %}
+    <{{parent.tag}} class="{{parent.cssClasses}}">
+{% endif %}
+
+{{layout.layout(parent,params)}}
+
+{% if root is sameas(true) %}
+    </{{parent.tag}}>
+{% endif %}

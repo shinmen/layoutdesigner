@@ -1,0 +1,7 @@
+{% if child.root.name == "root" and child.name == "test" %}
+	{% render(controller(child.render,{id:18})) %}
+{% endif %}
+
+{% if child.root.name == "root" and child.custom == "tool" %}
+	{% render(controller(child.render,{name:param[1]})) %}
+{% endif %}

@@ -1,3 +1,7 @@
+tool_tool:
+    resource: "@ToolToolBundle/Resources/config/routing.yml"
+    prefix:   /
+
 template_designer_layout:
     resource: "@TemplateDesignerLayoutBundle/Controller/"
     type:     annotation

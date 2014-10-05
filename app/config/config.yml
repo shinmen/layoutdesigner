@@ -59,6 +59,8 @@ doctrine:
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
+        resolve_target_entities:
+            TemplateDesigner\LayoutBundle\Entity\ContentSubjectInterface: Tool\ToolBundle\Entity\Content
 
 # Swiftmailer Configuration
 swiftmailer:
