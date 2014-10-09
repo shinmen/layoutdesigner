@@ -1,12 +1,29 @@
-.container,.row,.column{border: 1px black solid;}
+body 						{background: url('../images/concrete_wall.png') repeat; color: #FFF }
+.container,.row,.column		{border: 2px #dddddd solid; position: relative; padding-top: 25px; border-radius: 3px; background-color:#FFF }
+#root .droppable:after { 
+	background-color: #f5f5f5;
+    border: 1px solid #dddddd;
+    border-radius: 4px 0;
+    color: #9da0a4;
+    font-size: 12px;
+    font-weight: bold;
+    left: -1px;
+    padding: 3px 7px;
+    position: absolute;
+    top: -1px;}
+#root .container:after {content: "Container";}
+#root .row:after {content: "Row";}
+#root .column:after{content: "Column";}
 .container.root {height: 300px;}
 .row {height: 150px;}
 .column {height: 60px;}
-.toolbox   {float:left; width: 13%;}
+.toolbox   {float:left; width: 17%;}
 
-#garbage {height: 200px; width: 300px;}
+.containers .draggable {height: 4em; border-radius: 4px; border: 1px solid #dddddd; margin-left: 4em;}
 
-#selectable .ui-selecting { background: #FECA40; }
-#selectable .ui-selected { background: #F39814; color: white; }
+#selectable .ui-selecting { background: #33374C; color: #FFF;}
+#selectable .ui-selected { background: #449D44; color: #FFF; }
 #selectable { list-style-type: none; margin: 0; padding: 0; width: 10%;}
-#selectable li { margin: 3px; padding: 1px; float: left; width: 30px; height: 30px; font-size: 1em; text-align: center; }
+#selectable li { margin: 3px; padding: 1px; float: left; width: 40px; height: 30px; font-size: 1em; text-align: center; }
+
+.toolbox form select 		{color: #555;}

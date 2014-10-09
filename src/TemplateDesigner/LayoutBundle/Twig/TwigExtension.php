@@ -58,7 +58,7 @@ class TwigExtension extends \Twig_Extension {
      */
     public function layoutStart ($name,$position,$root=false) {
         $parent = $this->em->getRepository('TemplateDesignerLayoutBundle:Layout')->findLayoutWitOptions($name,$position);
-        $tag = '<'.$parent->getTag().' class="'.$parent->getCssClasses().'" id="'.$parent->getCssId().'" data-position="'.$parent->getPosition().'">';
+        $tag = '<'.$parent->getTag().' class="'.$parent->getCssClassesAsString().'" id="'.$parent->getCssId().'" data-position="'.$parent->getPosition().'">';
         return $tag;
     }
 

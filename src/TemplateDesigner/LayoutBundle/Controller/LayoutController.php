@@ -167,7 +167,7 @@ class LayoutController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('TemplateDesignerLayoutBundle:Layout')->find(17);
+        $entity = $em->getRepository('TemplateDesignerLayoutBundle:Layout')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Layout entity.');
@@ -191,6 +191,8 @@ class LayoutController extends Controller
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
+        $t = $this->container->getParameter('template_designer_layout.custom_param_template');
+        var_dump($t);
 
         $entity = $em->getRepository('TemplateDesignerLayoutBundle:Layout')->find($id);
 

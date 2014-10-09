@@ -18,7 +18,11 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('template_designer_layout');
+        $treeBuilder->root('template_designer_layout')
+            ->children()
+                ->scalarNode('custom_param_template')->defaultValue('TemplateDesignerLayoutBundle:Default:file.html.twig')->end()
+            ->end()
+        ;
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for

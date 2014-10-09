@@ -13,77 +13,72 @@ class Layout
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var array
      */
-    private $cssClasses;
+    protected $cssClasses;
 
     /**
      * @var string
      */
-    private $cssId;
+    protected $cssId;
 
     /**
      * @var string
      */
-    private $render;
+    protected $render;
 
     /**
      * @var string
      */
-    private $include;
+    protected $include;
 
     /**
      * @var boolean
      */
-    private $custom;
+    protected $custom;
 
     /**
      * @var string
      */
-    private $tag;
+    protected $tag;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $subs;
+    protected $subs;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $children;
+    protected $children;
 
     /**
      * @var \TemplateDesigner\LayoutBundle\Entity\Layout
      */
-    private $parent;
+    protected $parent;
 
     /**
      * @var \TemplateDesigner\LayoutBundle\Entity\Layout
      */
-    private $root;
+    protected $root;
 
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      */
-    private $engine;
+    protected $engine;
 
         /**
      * @var integer
      */
-    private $position;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $contents;
+    protected $position;
 
 
     public function __construct(){
@@ -93,7 +88,6 @@ class Layout
         $this->cssClasses = array();
         $this->subs = new ArrayCollection(); 
         $this->children = new ArrayCollection();
-        $this->contents = new ArrayCollection();
     }
 
     /**
@@ -128,7 +122,18 @@ class Layout
      */
     public function getCssClasses()
     {
-        return implode(' ',$this->cssClasses);
+        return $this->cssClasses;
+    }
+
+    /**
+     * Get cssClasses
+     *
+     * @return string
+     */
+    public function getCssClassesAsString()
+    {
+        $classes = (is_array($this->cssClasses[0]))?implode(' ',$this->cssClasses[0]):$this->cssClasses[0];
+        return $classes;
     }
 
     /**
@@ -433,36 +438,4 @@ class Layout
         return $this->position;
     }
 
-    /**
-     * Add contents
-     *
-     * @param \TemplateDesigner\LayoutBundle\Entity\ContentSubjectInterface $contents
-     * @return Layout
-     */
-    public function addContent(\TemplateDesigner\LayoutBundle\Entity\ContentSubjectInterface $contents)
-    {
-        $this->contents[] = $contents;
-
-        return $this;
-    }
-
-    /**
-     * Remove contents
-     *
-     * @param \TemplateDesigner\LayoutBundle\Entity\ContentSubjectInterface $contents
-     */
-    public function removeContent(\TemplateDesigner\LayoutBundle\Entity\ContentSubjectInterface $contents)
-    {
-        $this->contents->removeElement($contents);
-    }
-
-    /**
-     * Get contents
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getContents()
-    {
-        return $this->contents;
-    }
 }

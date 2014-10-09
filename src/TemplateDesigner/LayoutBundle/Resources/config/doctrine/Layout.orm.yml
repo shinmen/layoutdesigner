@@ -47,9 +47,9 @@ TemplateDesigner\LayoutBundle\Entity\Layout:
             children:
                 targetEntity: Layout
                 mappedBy: parent
-            contents:
-                targetEntity: ContentSubjectInterface
-                mappedBy: layout
+            # contents:
+            #     targetEntity: ContentSubjectInterface
+            #     mappedBy: layout
     manyToOne:
             parent:
                 targetEntity: Layout

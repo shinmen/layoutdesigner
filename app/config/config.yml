@@ -69,3 +69,7 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+template_designer_layout:
+    custom_param_template: ~
+
