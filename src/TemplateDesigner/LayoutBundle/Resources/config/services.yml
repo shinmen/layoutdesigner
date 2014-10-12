@@ -1,11 +1,24 @@
+parameters:
+    template_designer.layout_data_collector.template:  "TemplateDesignerLayoutBundle:DataCollector:template"
+
 services:
   layout.twig.extension:
     class: TemplateDesigner\LayoutBundle\Twig\TwigExtension # <--- here
     arguments: ["@doctrine.orm.entity_manager","@service_container"]
     tags:
       - { name: twig.extension }
-  # templateDesigner.annotation.controller_listener:
-  #   class: TemplateDesigner\LayoutBundle\Controller\ControllerListener
-  #   tags:
-  #     - { name: kernel.event_listener, event: kernel.controller, method: onCoreController, priority:-255 }
-  #   arguments: [@annotation_reader]
+
+  layout.params.action_listener:
+        class: TemplateDesigner\LayoutBundle\EventListener\ParameterWrapperListener
+        arguments: ["@service_container"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.view, method: onKernelView }
+  layout.annotation.action_listener:
+        class: TemplateDesigner\LayoutBundle\EventListener\LayoutAnnotationListener
+        arguments: ["@annotation_reader","@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
+  layout.data_collector.action_listener:
+        class: TemplateDesigner\LayoutBundle\DataCollector\LayoutDataCollector
+        tags:
+            - { name: data_collector, template: %template_designer.layout_data_collector.template%, id: "layout" }

@@ -71,5 +71,5 @@ swiftmailer:
     spool:     { type: memory }
 
 template_designer_layout:
-    custom_param_template: ~
+    custom_param_template: TemplateDesignerLayoutBundle:Layout:renderHelp.html.twig
 

@@ -1,16 +1,14 @@
-{% macro layout(parent,params) %}
+{% macro layout(parent,params,template) %}
     {% for child in parent.children %}
     	<{{child.tag}} class="{{child.cssClassesAsString}}">
-    		{% if child.include is not null %}
-    			{% include child.include %}
+            {% if child.custom !="" %}
+                {% include template %}
+    		{% elseif child.include is not null %}
+                {% include child.include %}
     		{% elseif child.render is not null %}
-                {% if child.custom is not null %}
-                    {% include 'TemplateDesignerLayoutBundle:Layout:renderHelp.html.twig'%}
-                {% else %}
-                    {% render(controller(child.render))%}
-                {% endif %}
+                {% render(path(child.render))%}
     		{% endif %}
-            {{_self.layout(child,params)}}
+            {{_self.layout(child,params,template)}}
     	</{{child.tag}}>
     {% endfor %}
 {% endmacro %}
@@ -21,7 +19,7 @@
     <{{parent.tag}} class="{{parent.cssClassesAsString}}">
 {% endif %}
 
-{{layout.layout(parent,params)}}
+{{layout.layout(parent,params,template)}}
 
 {% if root is sameas(true) %}
     </{{parent.tag}}>

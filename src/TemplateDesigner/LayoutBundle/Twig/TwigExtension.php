@@ -44,12 +44,13 @@ class TwigExtension extends \Twig_Extension {
      * @return template
      */
     public function renderLayout ($name,$param=null,$position=null,$root=true) {
+        $template = $this->container->getParameter('template_designer_layout.custom_param_template');
         if($position){
             $parent = $this->em->getRepository('TemplateDesignerLayoutBundle:Layout')->findLayoutWitOptions($name,$position);
         }else{
            $parent = $this->em->getRepository('TemplateDesignerLayoutBundle:Layout')->findOneBy(array('name'=>$name)); 
         }
-        return $this->environment->render('TemplateDesignerLayoutBundle:Layout:macroLayout.html.twig',array('params'=>$param,'parent'=>$parent,'position'=>$position,'root'=>$root));
+        return $this->environment->render('TemplateDesignerLayoutBundle:Layout:macroLayout.html.twig',array('template'=>$template,'params'=>$param,'parent'=>$parent,'position'=>$position,'root'=>$root));
     }
 
         /**

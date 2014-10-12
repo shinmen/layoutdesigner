@@ -1,0 +1,8 @@
+Tool\ToolBundle\Entity\MyLayout:
+    type: entity
+    table: null
+    # oneToMany:
+    #         contents:
+    #             targetEntity: Content
+    #             mappedBy: layout
+    lifecycleCallbacks: {  }

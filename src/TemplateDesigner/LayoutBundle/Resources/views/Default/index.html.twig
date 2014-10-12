@@ -1,4 +1,5 @@
 {% extends '::base.html.twig' %}
 {% block body %}
-{{render_layout('root',[name,vroom])|raw}}
+
+{{render_layout('root',params)|raw}}
 {% endblock %}

@@ -31,5 +31,4 @@ class Content
     {
         return $this->id;
     }
-
 }

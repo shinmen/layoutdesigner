@@ -1,0 +1,18 @@
+{% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
+
+{% block toolbar %}
+    {# le contenu de la barre d'outils de débuggage web #}
+    {{collector.layout.name}}
+{% endblock %}
+
+{% block head %}
+    {# si le « panel » du profiler web nécessite des fichiers JS ou CSS spécifiques #}
+{% endblock %}
+
+{% block menu %}
+    {# le contenu du menu #}
+{% endblock %}
+
+{% block panel %}
+    {# le contenu du « panel » #}
+{% endblock %}

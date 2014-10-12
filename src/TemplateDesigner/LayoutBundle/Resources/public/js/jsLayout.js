@@ -13,8 +13,9 @@ function addLink(elem){
 function addClassCol(elem,type){
     var l = $('.ui-selected').length;
     // $('#col').addClass('column col-'+type+'-'+l).text(l);
-    $('#col').attr('data-class',$('#col').attr('data-class')+' col-'+type+'-'+l);
+    $('#col').attr('data-class',$('#col').attr('data-class')+' col-'+type+'-'+l).show();
     // $('#col').addClass('column col-'+type+'-'+l);
+
 }
 
 function addClassVisible(elem,type){
@@ -47,7 +48,6 @@ $(function() {
                 ui.draggable.addClass('droppable '+ui.draggable.attr('data-class')).attr('ondblclick','deleteElem(event,$(this)); return false;').html('');
                 
                 // add 50px height every two times
-                console.log($(this).children().length);
                 if($(this).children().length %2 == 0){
                     $(this).height($(this).height()+100+'px');
                     $(this).parentsUntil('#root').each(function(){
@@ -58,7 +58,7 @@ $(function() {
                 $('#col').each(function(){
                     $(this).remove();
                 })
-                $('.toolbox .containers').append('<div id="col" data-class="column" class="draggable">Column</div>');
+                $('.toolbox .containers').append('<div style="display:none;" id="col" data-class="column" class="draggable">Column</div>');
             }
             $(this).append(ui.draggable);
             ui.draggable.removeAttr('id');

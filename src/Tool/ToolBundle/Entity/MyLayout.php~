@@ -1,0 +1,59 @@
+<?php
+
+namespace Tool\ToolBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use TemplateDesigner\LayoutBundle\Entity\Layout;
+/**
+ * MyLayout
+ */
+class MyLayout extends Layout
+{
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $contents;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->contents = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add contents
+     *
+     * @param \Tool\ToolBundle\Entity\Content $contents
+     * @return MyLayout
+     */
+    public function addContent(\Tool\ToolBundle\Entity\Content $contents)
+    {
+        $this->contents[] = $contents;
+
+        return $this;
+    }
+
+    /**
+     * Remove contents
+     *
+     * @param \Tool\ToolBundle\Entity\Content $contents
+     */
+    public function removeContent(\Tool\ToolBundle\Entity\Content $contents)
+    {
+        $this->contents->removeElement($contents);
+    }
+
+    /**
+     * Get contents
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getContents()
+    {
+        return $this->contents;
+    }
+
+}

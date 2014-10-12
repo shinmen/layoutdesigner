@@ -19,33 +19,25 @@
 	</div>
 </form>
 <ol id="selectable">
-	<li class="ui-state-default">1</li>
-	<li class="ui-state-default">2</li>
-	<li class="ui-state-default">3</li>
-	<li class="ui-state-default">4</li>
-	<li class="ui-state-default">5</li>
-	<li class="ui-state-default">6</li>
-	<li class="ui-state-default">7</li>
-	<li class="ui-state-default">8</li>
-	<li class="ui-state-default">9</li>
-	<li class="ui-state-default">10</li>
-	<li class="ui-state-default">11</li>
-	<li class="ui-state-default">12</li>
+	{% for i in range (1,12)%}
+		<li class="ui-state-default">{{i}}</li>
+	{% endfor %}
 </ol>
 
-<div class="btn btn-primary btn-ok-m">Mobile</div>
-<div class="btn btn-primary btn-ok-t">Tablette</div>
-<div class="btn btn-primary btn-ok-d">Desktop</div>
-<div class="btn btn-primary btn-ok-ld">Large Desktop</div>
-<div class="btn btn-primary btn-ok-hm">Hidden Mobile</div>
-<div class="btn btn-primary btn-ok-hd">Hidden Desktop</div>
-<div class="btn btn-primary btn-ok-hld">Hidden Large Desktop</div>
-<div class="btn btn-primary btn-ok-vm">Only visible Mobile</div>
-<div class="btn btn-primary btn-ok-vt">Only visible Tablette</div>
-<div class="btn btn-primary btn-ok-vd">Only visible Desktop</div>
-<div class="btn btn-primary btn-ok-vld">Only visible Large Desktop</div>
+<div class="btn btn-primary btn-sm btn-ok-m">Mobile</div>
+<div class="btn btn-primary btn-sm btn-ok-t">Tablette</div>
+<div class="btn btn-primary btn-sm btn-ok-d">Desktop</div>
+<div class="btn btn-primary btn-sm btn-ok-ld">Large Desktop</div>
+<div class="btn btn-primary btn-sm btn-ok-hm">Hidden Mobile</div>
+<div class="btn btn-primary btn-sm btn-ok-hd">Hidden Desktop</div>
+<div class="btn btn-primary btn-sm btn-ok-hld">Hidden Large Desktop</div>
+<div class="btn btn-primary btn-sm btn-ok-vm">Only visible Mobile</div>
+<div class="btn btn-primary btn-sm btn-ok-vt">Only visible Tablette</div>
+<div class="btn btn-primary btn-sm btn-ok-vd">Only visible Desktop</div>
+<div class="btn btn-primary btn-sm btn-ok-vld">Only visible Large Desktop</div>
 <div class="containers clearfix">
-	<div id="col" data-class="column" class="draggable">Column</div>
+	<div></div>
+	<div style="display:none;" id="col" data-class="column" class="draggable">Column</div>
 	<div id="row" class="draggable">Row</div>
 	<div id="container" class="draggable">container</div>
 </div>
