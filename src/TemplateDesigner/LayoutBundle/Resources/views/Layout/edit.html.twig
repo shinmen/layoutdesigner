@@ -1,6 +1,3 @@
-{% extends '::base.html.twig' %}
 
-{% block body -%}
-    {{form(edit_form)}}
-    {{render_layout(entity.name)|raw}}
-{% endblock %}
+    {{form(edit_form,{'attr':{'onsubmit':'return form_submit($(this));'}})}}
+    {{form(delete_form)}}

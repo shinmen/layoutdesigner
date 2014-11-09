@@ -39,7 +39,7 @@ class LayoutAnnotationListener {
                 }
 
                 $route_params = $event->getRequest()->attributes->get('_route_params');
-                $route_params['root_layout'] = $root;
+                $route_params['rootLayout'] = $root;
                 $event->getRequest()->attributes->set('_route_params',$route_params);
                 
             }

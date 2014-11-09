@@ -2,7 +2,7 @@
 
 {% block toolbar %}
     {# le contenu de la barre d'outils de débuggage web #}
-    {{collector.layout.name}}
+    {{collector.layout.name|default('none')}}
 {% endblock %}
 
 {% block head %}

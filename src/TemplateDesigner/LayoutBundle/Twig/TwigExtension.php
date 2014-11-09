@@ -43,12 +43,12 @@ class TwigExtension extends \Twig_Extension {
      * @param string $string
      * @return template
      */
-    public function renderLayout ($name,$param=null,$position=null,$root=true) {
+    public function renderLayout ($rootName,$param=null,$position=null,$root=true) {
         $template = $this->container->getParameter('template_designer_layout.custom_param_template');
         if($position){
-            $parent = $this->em->getRepository('TemplateDesignerLayoutBundle:Layout')->findLayoutWitOptions($name,$position);
+            $parent = $this->em->getRepository('TemplateDesignerLayoutBundle:Layout')->findLayoutWitOptions($rootName,$position);
         }else{
-           $parent = $this->em->getRepository('TemplateDesignerLayoutBundle:Layout')->findOneBy(array('name'=>$name)); 
+           $parent = $this->em->getRepository('TemplateDesignerLayoutBundle:Layout')->findOneBy(array('name'=>$rootName)); 
         }
         return $this->environment->render('TemplateDesignerLayoutBundle:Layout:macroLayout.html.twig',array('template'=>$template,'params'=>$param,'parent'=>$parent,'position'=>$position,'root'=>$root));
     }
@@ -57,9 +57,13 @@ class TwigExtension extends \Twig_Extension {
      * @param string $string
      * @return string
      */
-    public function layoutStart ($name,$position,$root=false) {
-        $parent = $this->em->getRepository('TemplateDesignerLayoutBundle:Layout')->findLayoutWitOptions($name,$position);
-        $tag = '<'.$parent->getTag().' class="'.$parent->getCssClassesAsString().'" id="'.$parent->getCssId().'" data-position="'.$parent->getPosition().'">';
+    public function layoutStart ($rootName,$position=null,$root=false) {
+        if($position){
+            $parent = $this->em->getRepository('TemplateDesignerLayoutBundle:Layout')->findLayoutWitOptions($rootName,$position);
+        }else{
+           $parent = $this->em->getRepository('TemplateDesignerLayoutBundle:Layout')->findOneBy(array('name'=>$rootName)); 
+        }
+        $tag = '<'.$parent->getTag().' class="'.$parent->getCssClassesAsString().' '.$parent->getCssComplementClasses().'" id="'.$parent->getCssId().'" data-position="'.$parent->getPosition().'">';
         return $tag;
     }
 
@@ -67,8 +71,12 @@ class TwigExtension extends \Twig_Extension {
      * @param string $string
      * @return string
      */
-    public function layoutEnd ($name,$position,$root=false) {
-        $parent = $this->em->getRepository('TemplateDesignerLayoutBundle:Layout')->findLayoutWitOptions($name,$position);
+    public function layoutEnd ($rootName,$position=null,$root=false) {
+        if($position){
+            $parent = $this->em->getRepository('TemplateDesignerLayoutBundle:Layout')->findLayoutWitOptions($rootName,$position);
+        }else{
+           $parent = $this->em->getRepository('TemplateDesignerLayoutBundle:Layout')->findOneBy(array('name'=>$rootName)); 
+        }
         $tag = '</'.$parent->getTag().'>';
         return $tag;
     }

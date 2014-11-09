@@ -21,13 +21,14 @@ class CssClassesTransformer implements DataTransformerInterface
         if (null === $cssClasses) {
             return "";
         }
-        if(!empty($cssClasses)){
-            if(is_array($cssClasses[0])){
-                $cssClasses = implode(' ', $cssClasses[0]);
-            }else{
-                $cssClasses = $cssClasses[0];
-            } 
-        }
+        // if(!empty($cssClasses)){
+        //     if(is_array($cssClasses[0])){
+        //         $cssClasses = implode(' ', $cssClasses[0]);
+        //     }else{
+        //         $cssClasses = $cssClasses[0];
+        //     } 
+        // }
+        $cssClasses = (is_array($cssClasses[0]))? $cssClasses[0] :$cssClasses;
         
         return $cssClasses;
     }
@@ -44,9 +45,27 @@ class CssClassesTransformer implements DataTransformerInterface
         if (!$cssClasses) {
             return null;
         }
-        $delimiter = strpos($cssClasses,',')?',':' ';
-        $cssClasses = explode($delimiter, $cssClasses);
-        return $cssClasses;
+        // $delimiter = strpos($cssClasses,',')?',':' ';
+        // $cssClasses = explode($delimiter, $cssClasses);
+        
+        $classesWrapper = array();
+        foreach ($cssClasses as $key => $value) {
+            if(strpos($value, 'col')!== false && !in_array('column',$cssClasses)){    
+                $cssClasses[]='column';
+            }
+        }
+
+        if(in_array('row', $cssClasses)){
+            $cssClasses = array('row');
+        }
+
+        if(in_array('container', $cssClasses)){
+            $cssClasses = array('container');
+        }
+
+        $classesWrapper[0] = $cssClasses;
+        
+        return $classesWrapper;
         
     }
 }

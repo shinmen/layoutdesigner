@@ -3,9 +3,5 @@
 
 {% block body -%}
 
-{{render_layout('root')|raw}}
-
-    {# {{layout_start('root',2)|raw}}
-    youhou
-    {{layout_end('root',3)|raw}} #}
+{{render_layout('root',params)|raw}}
 {% endblock %}

@@ -2,6 +2,9 @@ TemplateDesigner\LayoutBundle\Entity\Layout:
     type: entity
     table: layout_designer
     repositoryClass: TemplateDesigner\LayoutBundle\Entity\LayoutRepository
+    indexes:
+        name:
+            columns: [ name ]
     id:
         id:
             type: integer
@@ -16,6 +19,9 @@ TemplateDesigner\LayoutBundle\Entity\Layout:
             nullable: true
         cssClasses:
             type: array
+        cssComplementClasses:
+            type: string
+            length: 500
         tag:
             type: string
             length: 250
@@ -44,9 +50,11 @@ TemplateDesigner\LayoutBundle\Entity\Layout:
             subs:
                 targetEntity: Layout
                 mappedBy: root
+                cascade: ["persist","merge","remove"]
             children:
                 targetEntity: Layout
                 mappedBy: parent
+                cascade: ["persist","merge","remove"]
             # contents:
             #     targetEntity: ContentSubjectInterface
             #     mappedBy: layout
@@ -54,8 +62,18 @@ TemplateDesigner\LayoutBundle\Entity\Layout:
             parent:
                 targetEntity: Layout
                 inversedBy: children
+                cascade: ["persist","merge"]
+                joinColumn:
+                    name: parent_id
+                    referencedColumnName: id
+                    onDelete : CASCADE
             root:
                 targetEntity: Layout
                 inversedBy: subs
+                cascade: ["persist","merge"]
+                joinColumn:
+                    name: root_id
+                    referencedColumnName: id
+                    onDelete : CASCADE
 
     lifecycleCallbacks: {  }

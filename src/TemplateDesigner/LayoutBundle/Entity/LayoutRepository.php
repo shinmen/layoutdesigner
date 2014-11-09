@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityRepository;
 class LayoutRepository extends EntityRepository
 {
 
-	public function findLayoutWitOptions($root,$position){
+	public function findLayoutWitOptions($rootName,$position){
 		$qb= $this->getEntityManager()->createQueryBuilder();
 
         $qb ->select('l')
@@ -21,7 +21,7 @@ class LayoutRepository extends EntityRepository
             ->join('l.root','r')
             ->where($qb->expr()->eq('r.name',':root'))
             ->andWhere($qb->expr()->eq('l.position',':position'))
-            ->setParameters(array('root'=>$root,'position'=>$position));
+            ->setParameters(array('root'=>$rootName,'position'=>$position));
             return $qb->getQuery()->getOneOrNullResult();
 	}
 }

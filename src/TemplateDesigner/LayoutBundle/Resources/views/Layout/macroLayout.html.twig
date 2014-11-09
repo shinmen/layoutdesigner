@@ -1,12 +1,16 @@
 {% macro layout(parent,params,template) %}
     {% for child in parent.children %}
-    	<{{child.tag}} class="{{child.cssClassesAsString}}">
+    	<{{child.tag}} class="{{child.cssClassesAsString}} {{child.cssComplementClasses}}">
+            {# if custom => include given template in config #}
             {% if child.custom !="" %}
                 {% include template %}
+            {# if include without parameters #}
     		{% elseif child.include is not null %}
                 {% include child.include %}
     		{% elseif child.render is not null %}
                 {% render(path(child.render))%}
+            {% elseif child.content is defined and child.content is not null %}
+                {{child.content|raw }}
     		{% endif %}
             {{_self.layout(child,params,template)}}
     	</{{child.tag}}>
@@ -16,7 +20,7 @@
 {% import _self as layout %}
 {# if root == true, display root container #}
 {% if root is sameas(true) %}
-    <{{parent.tag}} class="{{parent.cssClassesAsString}}">
+    <{{parent.tag}} class="{{parent.cssClassesAsString}} {{child.cssComplementClasses}}">
 {% endif %}
 
 {{layout.layout(parent,params,template)}}

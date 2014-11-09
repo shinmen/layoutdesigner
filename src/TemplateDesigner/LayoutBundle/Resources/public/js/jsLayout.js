@@ -27,6 +27,8 @@ function addClassHidden(elem,type){
 }
 
 $(function() {
+
+    // template creation
     var options_drag = {cursor: "move",revert:true};
     var options_drop = {
         hoverClass: "ui-state-hover",
@@ -123,22 +125,24 @@ $(function() {
 
 
     $('.btn-transform').on('click',function(){
-        if(confirm('Confirmez-vous le template?')){
+        if(confirm('Do you wish to confirm?')){
             container = $('.container.root');
             rec(container,layout);
             var name = $('form input[name="name"]').val();
             var url = $('form').attr('action');
             $.ajax({
+                type:'POST',
                 url:url,
                 data: {name:name, layout:layout}
             }).done(function(data){
-                console.log(data);
+                // console.log(data);
             })
         }
 
     })
 });
 
+// create template object
 function rec(container,obj){
 
         // obj.tag = container.get(0).nodeName;

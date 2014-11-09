@@ -1,0 +1,78 @@
+{% extends '::base.html.twig' %}
+{% block stylesheets %}
+	{{parent()}}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/templatedesignerlayout/css/styleLayoutWithPosition.css')}}">
+{% endblock %}
+
+{% block body -%}
+    <div>{{form(edit_form)}}</div>
+    <div class="hidden flash"></div>
+    <div id="editLayout"></div>
+    <div id="showFullLayout"></div>
+{% endblock %}
+
+{% block javascripts %}
+{{parent()}}
+<script type="text/javascript">
+
+function getSelectSubs(data,selector){
+   $.ajax({
+        type: 'POST',
+        url: '{{ path("select_subs") }}',
+        data: data,
+    }).done(function(data){
+        selector.html(data);
+    }); 
+}
+
+function displaySubForm(data,selector){
+    $.ajax({
+        type: 'POST',
+        url: '{{ path("layout_edit") }}',
+        data: data,
+    }).done(function(data){
+        selector.html(data);
+    });
+}
+
+function displayTemplate(data,selector){
+   $.ajax({
+        type: 'POST',
+        url: '{{ path("layout_show_layout") }}',
+        data: data,
+    }).done(function(data){
+        selector.html(data);
+    }); 
+}
+
+function form_submit(elem){
+    var values = elem.serialize();
+    var url = elem.attr('action');
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: values,
+    }).done(function(data){
+        displayTemplate({root:$('#templatedesigner_layoutbundle_layout_edition_root option:selected').val()},$('#showFullLayout'))
+    });
+    return false; 
+}
+
+$(function(){
+	$("#templatedesigner_layoutbundle_layout_edition_root").on('change',function(e){
+		var $sub_selector = $('#templatedesigner_layoutbundle_layout_edition_subs');
+        var data = {root: $(this).val()};
+        $.when(getSelectSubs(data,$sub_selector),displayTemplate(data,$('#showFullLayout'))).done(function(data1,data2){
+            $('#editLayout').html('');
+        });
+    });
+    $("#templatedesigner_layoutbundle_layout_edition_subs").on('change',function(e){
+        var selected = $('option:selected',this).val();
+        var data = {layout: selected};
+        displaySubForm(data,$('#editLayout'))
+    });
+
+})
+</script>
+{% endblock %}
+

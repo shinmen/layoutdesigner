@@ -7,7 +7,7 @@ use TemplateDesigner\LayoutBundle\Entity\Layout;
 /**
  * MyLayout
  */
-class MyLayout extends Layout
+class MyLayout
 {
     
 

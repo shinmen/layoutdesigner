@@ -1,0 +1,4 @@
+	<option>{% trans %}Choose a sub layout{% endtrans %}</option>
+{% for sub in subs %}
+	<option value="{{sub.id}}">{{sub|trans}}</option>
+{% endfor %}

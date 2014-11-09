@@ -22,3 +22,8 @@ services:
         class: TemplateDesigner\LayoutBundle\DataCollector\LayoutDataCollector
         tags:
             - { name: data_collector, template: %template_designer.layout_data_collector.template%, id: "layout" }
+  route.manager:
+        class: TemplateDesigner\LayoutBundle\Service\RouteManager
+        arguments: ["@router"]
+  template_finder:
+        class: TemplateDesigner\LayoutBundle\Service\TemplateFinder

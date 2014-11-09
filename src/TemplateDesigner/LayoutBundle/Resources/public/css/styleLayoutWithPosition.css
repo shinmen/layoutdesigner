@@ -1,0 +1,17 @@
+.container,.row,.column		{border: 1px #dddddd solid; position: relative; padding-top: 25px; border-radius: 3px; background-color:#FFF;/* height: auto;*/ }
+#root .container .position:after,
+#root .row .position:after,
+#root .column .position:after { 
+	background-color: #f5f5f5;
+    border: 1px solid #dddddd;
+    border-radius: 4px 0;
+    color: #9da0a4;
+    font-size: 12px;
+    font-weight: bold;
+    left: -1px;
+    padding: 3px 7px;
+    position: absolute;
+    top: -1px;}
+#root .container >.position:after {content: "Container";}
+#root .row>.position:after {content: "Row";}
+#root .column>.position:after{content: "Column";}

@@ -1,0 +1,17 @@
+{% macro layout(parent,params,template) %}
+    {% for child in parent.children %}
+    	<{{child.tag}} class="{{child.cssClassesAsString}} {{child.cssComplementClasses}}">
+            <div onclick="displaySubForm({layout:$(this).attr('data-id')},$('#editLayout'))" data-id="{{child.id}}" class="position">{{child.position}}</div>
+            {{_self.layout(child,params,template)}}
+    	</{{child.tag}}>
+    {% endfor %}
+{% endmacro %}
+
+
+{% import _self as layout %}
+<div id='root'>
+    {{layout_start(parent.name,parent.position)|raw}}
+    <div onclick="displaySubForm({layout:$(this).attr('data-id')},$('#editLayout'))" data-id="{{parent.id}}" class="position">{{parent.position}}</div>
+    {{layout.layout(parent)}}
+    {{layout_end(parent.name,parent.position)|raw}}
+</div>
