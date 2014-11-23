@@ -20,8 +20,15 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $treeBuilder->root('template_designer_layout')
             ->children()
-                ->scalarNode('custom_param_template')->defaultValue('TemplateDesignerLayoutBundle:Default:file.html.twig')->end()
-            ->end()
+                ->scalarNode('custom_param_template')
+                    ->defaultValue('TemplateDesignerLayoutBundle:Default:file.html.twig')
+                    ->end()
+                ->end()
+            ->children()
+                ->scalarNode('template_engine')
+                    ->defaultValue('bootstrap')
+                    ->end()
+                ->end()
         ;
 
         // Here you should define the parameters that are allowed to

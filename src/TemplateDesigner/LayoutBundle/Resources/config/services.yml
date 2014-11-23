@@ -4,7 +4,7 @@ parameters:
 services:
   layout.twig.extension:
     class: TemplateDesigner\LayoutBundle\Twig\TwigExtension # <--- here
-    arguments: ["@doctrine.orm.entity_manager","@service_container"]
+    arguments: ["@doctrine.orm.entity_manager","%template_designer_layout.custom_param_template%"]
     tags:
       - { name: twig.extension }
 
@@ -27,3 +27,11 @@ services:
         arguments: ["@router"]
   template_finder:
         class: TemplateDesigner\LayoutBundle\Service\TemplateFinder
+  layout.doctrine.listener:
+        class: TemplateDesigner\LayoutBundle\EventListener\LayoutDataListener
+        arguments: ["%template_designer_layout.template_engine%"]
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+  layout.helper:
+        class: TemplateDesigner\LayoutBundle\Service\LayoutHelper
+        arguments: ["%template_designer_layout.template_engine%"]

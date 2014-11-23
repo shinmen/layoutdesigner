@@ -10,10 +10,9 @@ class LayoutDataCollector extends DataCollector
 
 	public function collect(Request $request, Response $response, \Exception $exception = null)
     {	
-    	if(isset($request->attributes->get('_route_params')['root_layout'])){
-			$this->data = array('layout' => $request->attributes->get('_route_params')['root_layout']);
+    	if(isset($request->attributes->get('_route_params')['rootLayout'])){
+			$this->data = array('layout' => $request->attributes->get('_route_params')['rootLayout']);
 		}
-        
     }
 
     public function getLayout()

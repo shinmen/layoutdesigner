@@ -26,5 +26,6 @@ class TemplateDesignerLayoutExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
         $container->setParameter('template_designer_layout.custom_param_template', $config['custom_param_template']);
+        $container->setParameter('template_designer_layout.template_engine', $config['template_engine']);
     }
 }

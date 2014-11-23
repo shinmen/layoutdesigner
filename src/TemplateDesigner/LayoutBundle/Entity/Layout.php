@@ -89,36 +89,22 @@ class Layout
 
     public function __construct(){
         $this->tag = 'div';
-        $this->engine = 'boostrap';
-        $this->custom = false;
         $this->cssClasses = array();
         $this->subs = new ArrayCollection(); 
         $this->children = new ArrayCollection();
     }
 
-    public static function getAllCssClasses($engine = 'bootstrap'){
-        if($engine == 'bootstrap'){
-            $devices = array('col-xs-'=>'mobile','col-sm-'=>'tablet','col-md-'=>'desktop','col-lg-'=>'large desktop');
-            $css = array('row'=>'row','container'=>'container');
+    public function isCustomComplete(){
+        if($this->custom){
+            if(!$this->include && !$this->render) return true;
+        }else{
+            return false;
         }
-        
-        foreach ($devices as $key => $device) {
-            $css[$device] = array();
-            foreach (range(1, 12) as $value) {
-                $css[$device][$key.$value]= $value.' column(s)';
-            }
-        }
-        
-        return $css;
-    }
-
-    public static function getAllTags(){
-        
-        return array('article'=>'article','div'=>'div','nav'=>'nav','p'=>'paragraph','section'=>'section');
     }
 
     public function __toString(){
-        return $this->name." - ".$this->position;
+        $name = ($this->root)? $this->root->getName(): $this->name;
+        return 'Template: '.$name." - ".$this->position;
     }
 
     /**
@@ -148,41 +134,6 @@ class Layout
         return $this;
     }
 
-    /**
-     * add cssClasses
-     *
-     * @return Layout
-     */
-    public function addComplementCssClass($cssClasses)
-    {
-        $delimiter = strpos($cssClasses,',')?',':' ';
-        $cssClasses = explode($delimiter, $cssClasses);
-        $cssClasses = (is_array($cssClasses[0]))? $cssClasses[0] :$cssClasses;
-        foreach ($cssClasses as $class) {
-            $this->cssClasses[] = $class;
-        }
-        
-        return $this;
-    }
-
-    /**
-     * remove cssClasses
-     *
-     * @param array $cssClasses
-     * @return Layout
-     */
-    public function removeComplementCssClass($cssClasses)
-    {
-        
-        $key = array_search($cssClasses, $this->cssClasses, true);         
-        if ($key !== false) {
-            unset($this->cssClasses[$key]);
-             
-            return true;
-        }
-         
-        return false;
-    }
 
     /**
      * Get cssClasses

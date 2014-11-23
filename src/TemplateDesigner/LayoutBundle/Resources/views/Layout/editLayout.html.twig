@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 {% block stylesheets %}
 	{{parent()}}
-<link rel="stylesheet" type="text/css" href="{{asset('bundles/templatedesignerlayout/css/styleLayoutWithPosition.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('bundles/templatedesignerlayout/css/styleLayoutWithPosition.css')}}">
 {% endblock %}
 
 {% block body -%}
@@ -45,6 +45,14 @@ function displayTemplate(data,selector){
     }); 
 }
 
+function refreshSelectSubsAndTemplate(root){
+   var $sub_selector = $('#templatedesigner_layoutbundle_layout_edition_subs');
+    var data = {root: root};
+    $.when(getSelectSubs(data,$sub_selector),displayTemplate(data,$('#showFullLayout'))).done(function(data1,data2){
+        $('#editLayout').html('');
+    }); 
+}
+
 function form_submit(elem){
     var values = elem.serialize();
     var url = elem.attr('action');
@@ -58,13 +66,24 @@ function form_submit(elem){
     return false; 
 }
 
+function form_submit_add_child(elem){
+    var form = elem.closest('form');
+    var parent = $('#templatedesigner_layoutbundle_layout_edition_subs').val();
+    // var url = form.attr('action',"{{path('layout_update_add')}}");
+    $.ajax({
+        type: 'POST',
+        url: "{{path('layout_update_add')}}",
+        data: {parent:parent},
+    }).done(function(data){
+        refreshSelectSubsAndTemplate($("#templatedesigner_layoutbundle_layout_edition_root").val());
+        // displayTemplate({root:$('#templatedesigner_layoutbundle_layout_edition_root option:selected').val()},$('#showFullLayout'))
+    });
+    return false; 
+}
+
 $(function(){
 	$("#templatedesigner_layoutbundle_layout_edition_root").on('change',function(e){
-		var $sub_selector = $('#templatedesigner_layoutbundle_layout_edition_subs');
-        var data = {root: $(this).val()};
-        $.when(getSelectSubs(data,$sub_selector),displayTemplate(data,$('#showFullLayout'))).done(function(data1,data2){
-            $('#editLayout').html('');
-        });
+		refreshSelectSubsAndTemplate($(this).val());
     });
     $("#templatedesigner_layoutbundle_layout_edition_subs").on('change',function(e){
         var selected = $('option:selected',this).val();

@@ -1,8 +1,9 @@
 
-{% if child.root.name == "root" and child.name == "test" %}
-	{% render(controller(child.render,{id:18})) %}
+{% if child.root.name == "root" and child.custom == "first" %}
+	{% render(controller(child.render,{name:params['name']})) %}
 {% endif %}
 
-{% if child.root.name == "root" and child.custom == "tool" %}
-	{% render(path(child.render,{name:params['name']})) %}
+{% if child.root.name == "root" and child.custom == "second" %}
+	{# {% render(path(child.render,{name:params['vroom']})) %} #}
+	{% include child.include with {name:params['name']} %}
 {% endif %}

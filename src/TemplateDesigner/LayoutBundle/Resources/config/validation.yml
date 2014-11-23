@@ -1,0 +1,9 @@
+TemplateDesigner\LayoutBundle\Entity\Layout:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: {fields: name, message: The template name is already used}
+    # getters:
+    #     customComplete:
+    #         - "True": { message: "a include or a render must be specified" }
+    # properties:
+    #     name:
+    #         - NotBlank: ~

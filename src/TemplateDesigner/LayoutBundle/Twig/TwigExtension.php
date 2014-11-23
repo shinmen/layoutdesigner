@@ -11,12 +11,12 @@ class TwigExtension extends \Twig_Extension {
 
     protected $em;
     protected $environment;
-    protected $container;
+    protected $parameterTemplate;
 
-    public function __construct(EntityManager $entityManager, Container $container)
+    public function __construct(EntityManager $entityManager, $parameterTemplate)
     {
         $this->em = $entityManager;
-        $this->container = $container;
+        $this->parameterTemplate = $parameterTemplate;
     }
 
     /**
@@ -44,7 +44,7 @@ class TwigExtension extends \Twig_Extension {
      * @return template
      */
     public function renderLayout ($rootName,$param=null,$position=null,$root=true) {
-        $template = $this->container->getParameter('template_designer_layout.custom_param_template');
+        $template = $this->parameterTemplate;
         if($position){
             $parent = $this->em->getRepository('TemplateDesignerLayoutBundle:Layout')->findLayoutWitOptions($rootName,$position);
         }else{

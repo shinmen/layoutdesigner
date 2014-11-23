@@ -2,17 +2,31 @@
 
 {% block toolbar %}
     {# le contenu de la barre d'outils de débuggage web #}
-    {{collector.layout.name|default('none')}}
+    <div class="sf-toolbar-block">
+    	<div class="sf-toolbar-icon">
+    		<a href="{{ path('_profiler', { 'token': token, 'panel': collector.name }) }}">
+    			<img src="" width="20" height="28">
+    			<span>{{collector.layout.name|default('none')}}</span>
+    		</a>
+    	</div>
+    </div>
 {% endblock %}
 
 {% block head %}
-    {# si le « panel » du profiler web nécessite des fichiers JS ou CSS spécifiques #}
+	{{parent()}}
+    <link rel="stylesheet" type="text/css" href="{{asset('bundles/templatedesignerlayout/bootstrap/bootstrap-3.2.0-dist/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('bundles/templatedesignerlayout/css/styleLayoutWithPosition.css')}}">
 {% endblock %}
 
 {% block menu %}
-    {# le contenu du menu #}
+	<span class="label">
+		<span class="icon"></span>
+		<strong>{% trans %}Layout{% endtrans %}</strong>
+	</span>
 {% endblock %}
 
 {% block panel %}
-    {# le contenu du « panel » #}
+	{% if collector.layout is not null %}
+    	{% include 'TemplateDesignerLayoutBundle:Layout:displayLayoutWithPositions.html.twig' with {parent:collector.layout}%}
+    {% endif %}
 {% endblock %}

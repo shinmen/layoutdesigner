@@ -33,7 +33,7 @@ class LayoutType extends AbstractType
             ->add('include','choice',array('required'=>false,'empty_value'=>'Select a template','choices'=>$templates))
             ->add('custom',null,array('required'=>false))
             ->add('cssComplementClasses','text',array('required'=>false))
-            ->add('addNewChild','submit')
+            ->add('addNewChild','submit',array('attr'=>array('onclick'=>'return form_submit_add_child($(this));')))
         ;
          $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
             $layout = $event->getData();
