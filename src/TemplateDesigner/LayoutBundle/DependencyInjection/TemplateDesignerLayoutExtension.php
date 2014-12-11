@@ -27,5 +27,6 @@ class TemplateDesignerLayoutExtension extends Extension
         $loader->load('services.yml');
         $container->setParameter('template_designer_layout.custom_param_template', $config['custom_param_template']);
         $container->setParameter('template_designer_layout.template_engine', $config['template_engine']);
+        $container->setParameter('template_designer_layout.edit_form_twig', $config['edit_form_twig']);
     }
 }

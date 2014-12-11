@@ -1,4 +1,4 @@
-{% extends '::base.html.twig' %}
+{% extends edit_form_twig %}
 {% block stylesheets %}
 {{parent()}}
 <link rel="stylesheet" type="text/css" href="{{asset('bundles/templatedesignerlayout/css/styleLayout.css')}}">
@@ -24,29 +24,30 @@
 	{% endfor %}
 </ol>
 
-<div class="btn btn-primary btn-sm btn-ok-m">Mobile</div>
-<div class="btn btn-primary btn-sm btn-ok-t">Tablette</div>
-<div class="btn btn-primary btn-sm btn-ok-d">Desktop</div>
-<div class="btn btn-primary btn-sm btn-ok-ld">Large Desktop</div>
-<div class="btn btn-primary btn-sm btn-ok-hm">Hidden Mobile</div>
-<div class="btn btn-primary btn-sm btn-ok-hd">Hidden Desktop</div>
-<div class="btn btn-primary btn-sm btn-ok-hld">Hidden Large Desktop</div>
-<div class="btn btn-primary btn-sm btn-ok-vm">Only visible Mobile</div>
-<div class="btn btn-primary btn-sm btn-ok-vt">Only visible Tablette</div>
-<div class="btn btn-primary btn-sm btn-ok-vd">Only visible Desktop</div>
-<div class="btn btn-primary btn-sm btn-ok-vld">Only visible Large Desktop</div>
+<div class="btn btn-primary btn-xs btn-ok-m">Mobile</div>
+<div class="btn btn-primary btn-xs btn-ok-t">Tablette</div>
+<div class="btn btn-primary btn-xs btn-ok-d">Desktop</div>
+<div class="btn btn-primary btn-xs btn-ok-ld">Large Desktop</div>
+<div class="btn btn-primary btn-xs btn-ok-hm">Hidden Mobile</div>
+<div class="btn btn-primary btn-xs btn-ok-hd">Hidden Desktop</div>
+<div class="btn btn-primary btn-xs btn-ok-hld">Hidden Large Desktop</div>
+<div class="btn btn-primary btn-xs btn-ok-vm">Only visible Mobile</div>
+<div class="btn btn-primary btn-xs btn-ok-vt">Only visible Tablette</div>
+<div class="btn btn-primary btn-xs btn-ok-vd">Only visible Desktop</div>
+<div class="btn btn-primary btn-xs btn-ok-vld">Only visible Large Desktop</div>
 <div class="containers clearfix">
 	<div></div>
-	<div style="display:none;" id="col" data-class="column" class="draggable">Column</div>
+	
 	<div id="row" class="draggable">Row</div>
-	<div id="container" class="draggable">container</div>
+	<div style="display:none;" id="col" data-class="column" class="draggable">Column</div>
+	{# <div id="container" class="draggable">container</div> #}
 </div>
 
 <div class="btn btn-success btn-transform">Convert</div>
 </div>
-<div id="root">
+{# <div id="root"> #}
 	<div class="root container droppable"></div>
-</div>
+{# </div> #}
 
 
 

@@ -1,3 +1,7 @@
+body            {margin-left: 200px;}
+.forms, #editLayout          {position: fixed; width: 180px; left: 2px;}
+#editLayout                 {top: 220px;}
+.position                   {text-align: center; font-weight: bolder; color:#9da0a4;}
 .container,.row,.column		{border: 1px #dddddd solid; position: relative; padding-top: 25px; border-radius: 3px; background-color:#FFF;/* height: auto;*/ }
 #root .container .position:after,
 #root .row .position:after,

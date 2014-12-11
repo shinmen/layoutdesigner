@@ -33,9 +33,11 @@ class LayoutController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('TemplateDesignerLayoutBundle:Layout')->findAll();
+        $edit_form_twig = $this->container->getParameter('template_designer_layout.edit_form_twig');
 
         return array(
             'entities' => $entities,
+            'edit_form_twig'=>$edit_form_twig
         );
     }
     /**
@@ -175,10 +177,11 @@ class LayoutController extends Controller
         $em = $this->getDoctrine()->getManager();
         $entity = new Layout();
         $editForm = $this->createForm(new LayoutEditionType(),$entity);
-        
+        $edit_form_twig = $this->container->getParameter('template_designer_layout.edit_form_twig');
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
+            'edit_form_twig'=>$edit_form_twig
         );
     }
 

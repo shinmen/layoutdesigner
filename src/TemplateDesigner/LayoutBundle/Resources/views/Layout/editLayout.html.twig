@@ -1,11 +1,16 @@
-{% extends '::base.html.twig' %}
+{% extends edit_form_twig %}
 {% block stylesheets %}
 	{{parent()}}
     <link rel="stylesheet" type="text/css" href="{{asset('bundles/templatedesignerlayout/css/styleLayoutWithPosition.css')}}">
 {% endblock %}
 
 {% block body -%}
-    <div>{{form(edit_form)}}</div>
+    {% form_theme edit_form 'TemplateDesignerLayoutBundle:Form:common.html.twig'%}
+    <div class="forms">
+        {{form_start(edit_form,{'attr':{'onsubmit':'return form_submit($(this));'}})}}
+        {{form_row(edit_form)}}
+        {{form_end(edit_form)}}
+    </div>
     <div class="hidden flash"></div>
     <div id="editLayout"></div>
     <div id="showFullLayout"></div>

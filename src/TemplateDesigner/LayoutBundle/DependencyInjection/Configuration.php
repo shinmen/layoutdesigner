@@ -29,6 +29,11 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue('bootstrap')
                     ->end()
                 ->end()
+            ->children()
+                ->scalarNode('edit_form_twig')
+                    ->defaultValue('::base.html.twig')
+                    ->end()
+                ->end()
         ;
 
         // Here you should define the parameters that are allowed to

@@ -1,3 +1,6 @@
-
-    {{form(edit_form,{'attr':{'onsubmit':'return form_submit($(this));'}})}}
-    {{form(delete_form)}}
+{% form_theme edit_form'TemplateDesignerLayoutBundle:Form:common.html.twig'%}
+{# {{form(edit_form,{'attr':{'onsubmit':'return form_submit($(this));'}})}} #}
+{{form_start(edit_form,{'attr':{'onsubmit':'return form_submit($(this));'}})}}
+{{form_row(edit_form)}}
+{{form_end(edit_form)}}
+{{form(delete_form)}}
