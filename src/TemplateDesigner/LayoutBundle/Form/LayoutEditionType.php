@@ -19,8 +19,9 @@ class LayoutEditionType extends AbstractType
         
         $builder
             ->add('root','entity',array(
-                'class'=>'TemplateDesignerLayoutBundle:Layout',
-                'empty_value'   => 'RootLayouts',
+                'class'         =>'TemplateDesignerLayoutBundle:Layout',
+                'empty_value'   => 'Select a Layout',
+                'label'         => 'Layouts',
                 'query_builder' => function(EntityRepository $er) {
                     $qb = $er->createQueryBuilder('l');
                     $qb

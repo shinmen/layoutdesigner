@@ -1,6 +1,26 @@
-{% form_theme edit_form'TemplateDesignerLayoutBundle:Form:common.html.twig'%}
-{# {{form(edit_form,{'attr':{'onsubmit':'return form_submit($(this));'}})}} #}
-{{form_start(edit_form,{'attr':{'onsubmit':'return form_submit($(this));'}})}}
-{{form_row(edit_form)}}
-{{form_end(edit_form)}}
-{{form(delete_form)}}
+{% form_theme edit_form 'TemplateDesignerLayoutBundle:Form:common.html.twig' %}
+<div class="row no-border">
+	{{form_start(edit_form,{'attr':{'onsubmit':'return form_submit($(this));'}})}}
+	{% for child in edit_form.children if child.vars.name == 'name' %}
+		<div class="col-xs-6">
+			{{form_row(child)}}
+		</div>
+	{% endfor %}
+	{% for child in edit_form.children %}
+		{% if loop.index is even %}
+			<div class="col-xs-6">
+				{{form_row(child)}}
+			</div>
+		{% else %}
+			<div class="col-xs-6">
+				{{form_row(child)}}
+			</div>
+		{% endif %}	
+	{% endfor %}
+	{{form_end(edit_form)}}
+	<div class="col-xs-12">
+		{{form(delete_form)}}
+	</div>
+
+</div>
+

@@ -31,6 +31,8 @@ class AddSubLayoutFieldSubscriber implements EventSubscriberInterface
             'attr'          => array(
                 'class' => '',
             ),
+            'empty_value'   => 'Select a sub layout',
+            'label'         =>'Sub-Layout',
             'query_builder' => function (EntityRepository $repository) use ($root_id) {
                 $qb = $repository->createQueryBuilder('l')
                     ->join('l.root','r')

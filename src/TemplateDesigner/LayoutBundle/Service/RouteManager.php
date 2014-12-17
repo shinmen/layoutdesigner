@@ -23,13 +23,11 @@ class RouteManager {
         $formattedRoutes = array();
         foreach ($routes as $route) {
             $path = $route->getPath();
-            if(!strpos($path, '_')){
+            $methods = $route->getMethods();
+            if(!strpos($path, '_') && (in_array('GET', $methods)||empty($methods)) ){
                 $patterns = array('/Controller/',"/\\\/",'/::/','/Action/');
                 $replacements = array(':');
                 $action = preg_replace($patterns,$replacements,$route->getDefaults()['_controller']);
-                if($route->getMethods()){
-                    $path .= "(".$route->getMethods()[0].")";
-                }
                 $formattedRoutes[$action]= $path; 
             }
         }

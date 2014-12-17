@@ -289,7 +289,7 @@ class LayoutController extends Controller
             'templates' => $templates
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        
 
         return $form;
     }
@@ -398,7 +398,7 @@ class LayoutController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('layout_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'Delete','attr'=>array('class'=>'btn btn-default')))
             ->getForm()
         ;
     }

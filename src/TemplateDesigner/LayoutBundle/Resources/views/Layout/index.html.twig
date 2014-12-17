@@ -6,51 +6,63 @@
 {% block body -%}
 
 <div class="toolbox">
-<form role="form" action="{{path('layout_transform')}}" method="#">
-	<div class="form-group"><label for="name">Name:</label><input class="form-control" type="text" name="name"></div>
-	<div class="form-group">
-		<select>
-			<option value="div">Div</option>
-			<option value="nav">Nav</option>
-			<option value="article">Article</option>
-			<option value="section">Section</option>
-			<option value="p">Paragraph</option>
-		</select>
+	<form class="form-inline" role="form" action="{{path('layout_transform')}}" method="#">
+		<div class="form-group"><label for="name">Name:</label><input class="form-control" type="text" name="name"></div>
+		<div class="form-group">
+			<select class="form-control">
+				<option value="div">Div</option>
+				<option value="nav">Nav</option>
+				<option value="article">Article</option>
+				<option value="section">Section</option>
+{# 				<option value="p">Paragraph</option> #}
+			</select>
+		</div>
+	</form>
+	<div role="alert" class="alert alert-success"></div>
+	<div role="alert" class="alert alert-danger"></div>
+	<ol id="selectable">
+		{% for i in range (1,12)%}
+			<li class="ui-state-default">{{i}}</li>
+		{% endfor %}
+	</ol>
+	<div class="clearfix"></div>
+	<div class="btns">
+		<div class="btns-primary">
+			<div class="btn btn-primary btn-xs btn-ok-m">Mobile</div>
+			<div class="btn btn-primary btn-xs btn-ok-t">Tablet</div>
+			<div class="btn btn-primary btn-xs btn-ok-d">Desktop</div>
+			<div class="btn btn-primary btn-xs btn-ok-ld">Large Desktop</div>
+		</div>
+		<div class="btns-hidden">
+			<div class="btn btn-primary btn-xs btn-ok-hm">Hidden Mobile</div>
+			<div class="btn btn-primary btn-xs btn-ok-ht">Hidden Tablet</div>
+			<div class="btn btn-primary btn-xs btn-ok-hd">Hidden Desktop</div>
+			<div class="btn btn-primary btn-xs btn-ok-hld">Hidden Large Desktop</div>
+		</div>
+		<div class="btns.visible">
+			<div class="btn btn-primary btn-xs btn-ok-vm">Only visible Mobile</div>
+			<div class="btn btn-primary btn-xs btn-ok-vt">Only visible Tablet</div>
+			<div class="btn btn-primary btn-xs btn-ok-vd">Only visible Desktop</div>
+			<div class="btn btn-primary btn-xs btn-ok-vld">Only visible Large Desktop</div>
+		</div>
+		<div class="clearfix"></div>
 	</div>
-</form>
-<ol id="selectable">
-	{% for i in range (1,12)%}
-		<li class="ui-state-default">{{i}}</li>
-	{% endfor %}
-</ol>
 
-<div class="btn btn-primary btn-xs btn-ok-m">Mobile</div>
-<div class="btn btn-primary btn-xs btn-ok-t">Tablette</div>
-<div class="btn btn-primary btn-xs btn-ok-d">Desktop</div>
-<div class="btn btn-primary btn-xs btn-ok-ld">Large Desktop</div>
-<div class="btn btn-primary btn-xs btn-ok-hm">Hidden Mobile</div>
-<div class="btn btn-primary btn-xs btn-ok-hd">Hidden Desktop</div>
-<div class="btn btn-primary btn-xs btn-ok-hld">Hidden Large Desktop</div>
-<div class="btn btn-primary btn-xs btn-ok-vm">Only visible Mobile</div>
-<div class="btn btn-primary btn-xs btn-ok-vt">Only visible Tablette</div>
-<div class="btn btn-primary btn-xs btn-ok-vd">Only visible Desktop</div>
-<div class="btn btn-primary btn-xs btn-ok-vld">Only visible Large Desktop</div>
-<div class="containers clearfix">
-	<div></div>
-	
-	<div id="row" class="draggable">Row</div>
-	<div style="display:none;" id="col" data-class="column" class="draggable">Column</div>
-	{# <div id="container" class="draggable">container</div> #}
+	<div class="containers clearfix">
+		<div class="container-row">
+			<div id="row" class="draggable">{% trans %}Row {% endtrans %}</div>
+		</div>
+		<div class="container-column">
+			<div style="display:none;" id="col" data-class="column" class="draggable">Column</div>
+		</div>
+		{# <div class="container-container">
+			<div id="container" class="draggable">container</div>
+		</div> #}
+	</div>
+	<div class="btn btn-success btn-transform">Convert</div>
 </div>
 
-<div class="btn btn-success btn-transform">Convert</div>
-</div>
-{# <div id="root"> #}
-	<div class="root container droppable"></div>
-{# </div> #}
-
-
-
+<div class="root container droppable"></div>
 {% endblock %}
 {% block javascripts %}
 {{parent()}}

@@ -10,23 +10,33 @@ function addLink(elem){
     elem.append('<a href="#" onclick="deleteElem($(this).parent()); return false;">delete</a>');
 }
 
+function alertColumn(text){
+    $('.alert-success').html('added: '+text).show().fadeOut(20000);
+}
+
 function addClassCol(elem,type){
     var l = $('.ui-selected').length;
-    // $('#col').addClass('column col-'+type+'-'+l).text(l);
     $('#col').attr('data-class',$('#col').attr('data-class')+' col-'+type+'-'+l).show();
-    // $('#col').addClass('column col-'+type+'-'+l);
-
+    alertColumn(type+l);
 }
 
 function addClassVisible(elem,type){
-    $('#col').addClass('visible-'+type+'-block');
+    $('#col').attr('data-class',$('#col').attr('data-class')+' visible-'+type+'-block').show();
+    // $('#col').addClass('visible-'+type+'-block');
+    alertColumn(type+' visible');
 }
 
 function addClassHidden(elem,type){
-    $('#col').addClass('hidden-'+type);
+    $('#col').attr('data-class',$('#col').attr('data-class')+' hidden-'+type).show();
+    // $('#col').addClass('hidden-'+type);
+    alertColumn(type+' hidden');
 }
 
 $(function() {
+
+    $('.toolbox form select').on('change',function(){
+        node = $('option:selected',$(this)).val();
+    })
 
     // template creation
     var options_drag = {cursor: "move",revert:true};
@@ -37,14 +47,14 @@ $(function() {
             if(ui.draggable.attr('id')=="row"){
                 ui.draggable.addClass('row droppable').attr('ondblclick','deleteElem(event,$(this)); return false;').html('');
                 $(this).height($(this).height()+200+'px');
-                $(this).parentsUntil('#root').each(function(){
+                $(this).parentsUntil($('.root'),'div').each(function(){
                     $(this).height($(this).height()+200+'px');
                 })
 
-                $('.toolbox .containers').append('<div id="row" class="draggable">Row</div>');
+                $('.toolbox .containers .container-row').append('<div id="row" class="draggable">Row</div>');
             }else if(ui.draggable.attr('id')=="container"){
                 ui.draggable.addClass('container droppable').attr('ondblclick','deleteElem(event,$(this)); return false;').html('');
-                $('.toolbox .containers').append('<div id="container" class="draggable">Container</div>');
+                $('.toolbox .containers .container-container').append('<div id="container" class="draggable">Container</div>');
             }
             else{
                 ui.draggable.addClass('droppable '+ui.draggable.attr('data-class')).attr('ondblclick','deleteElem(event,$(this)); return false;').html('');
@@ -52,7 +62,7 @@ $(function() {
                 // add 50px height every two times
                 if($(this).children().length %2 == 0){
                     $(this).height($(this).height()+100+'px');
-                    $(this).parentsUntil('#root').each(function(){
+                    $(this).parentsUntil($('.root'),'div').each(function(){
                         $(this).height($(this).height()+100+'px');
                     })
                 }
@@ -60,7 +70,7 @@ $(function() {
                 $('#col').each(function(){
                     $(this).remove();
                 })
-                $('.toolbox .containers').append('<div style="display:none;" id="col" data-class="column" class="draggable">Column</div>');
+                $('.toolbox .containers .container-column').append('<div style="display:none;" id="col" data-class="column" class="draggable">Column</div>');
             }
             $(this).append(ui.draggable);
             ui.draggable.removeAttr('id');
@@ -70,16 +80,7 @@ $(function() {
         }
     }
 
-    $( "#selectable" ).selectable({
-        selected: function( event, ui ) {
-            // selectedTab.push(ui.selected);
-        },
-    });
-
-
-    $('form select').on('change',function(){
-        node = $('form select option:selected').val();
-    })
+    $( "#selectable" ).selectable();
 
     $('.btn-ok-m').on('click',function(){
         addClassCol($('.ui-selected'),'xs');
@@ -127,7 +128,7 @@ $(function() {
     $('.btn-transform').on('click',function(){
         if(confirm('Do you wish to confirm?')){
             container = $('.container.root');
-            rec(container,layout);
+            createLayout(container,layout);
             var name = $('form input[name="name"]').val();
             var url = $('form').attr('action');
             $.ajax({
@@ -135,7 +136,7 @@ $(function() {
                 url:url,
                 data: {name:name, layout:layout}
             }).done(function(data){
-                // console.log(data);
+                
             })
         }
 
@@ -143,19 +144,19 @@ $(function() {
 });
 
 // create template object
-function rec(container,obj){
+function createLayout(container,obj){
 
         // obj.tag = container.get(0).nodeName;
         obj.tag = node;
         obj.cssClass = container.attr('class');
         obj.children = [];
         
-        if(container.children().length>0){
+        if(container.children().length > 0){
             container.children().each(function(){
                 var child = {};
                 var children = obj.children;
                 children.push(child);
-                rec($(this),child);
+                createLayout($(this),child);
             })
         };
 }

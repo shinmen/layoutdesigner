@@ -1,7 +1,18 @@
 {% macro layout(parent,params,template) %}
     {% for child in parent.children %}
     	<{{child.tag}} class="{{child.cssClassesAsString}} {{child.cssComplementClasses}}">
-            <div onclick="displaySubForm({layout:$(this).attr('data-id')},$('#editLayout'))" data-id="{{child.id}}" class="position">{{child.position}}</div>
+            <div onclick="displaySubForm({layout:$(this).attr('data-id')},$('#editLayout'))" data-id="{{child.id}}" class="position">
+                {{child.position}}<br>
+                {% if child.custom %}
+                    {{'Custom parameters: '~child.custom|trans}}
+                {% elseif child.include %}
+                    {{'Include: '~child.include|trans}}
+                {% elseif child.render %}
+                    {{'Render: '~child.render|trans}}
+                {% else %}
+                    &nbsp;
+                {% endif %}
+            </div>
             {{_self.layout(child,params,template)}}
     	</{{child.tag}}>
     {% endfor %}
