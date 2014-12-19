@@ -11,7 +11,7 @@ function addLink(elem){
 }
 
 function alertColumn(text){
-    $('.alert-success').html('added: '+text).show().fadeOut(20000);
+    $('.alert-success').html('added: '+text).show().fadeOut(8000);
 }
 
 function addClassCol(elem,type){
@@ -32,7 +32,31 @@ function addClassHidden(elem,type){
     alertColumn(type+' hidden');
 }
 
+// create template object
+function createLayout(container,obj){
+
+    // obj.tag = container.get(0).nodeName;
+    obj.tag = node;
+    obj.cssClass = container.attr('class');
+    obj.children = [];
+        
+    if(container.children().length > 0){
+        container.children().each(function(){
+            var child = {};
+            var children = obj.children;
+            children.push(child);
+            createLayout($(this),child);
+        })
+    };
+}
+
 $(function() {
+    $('#selectable .ui-state-default').on('click',function(){
+        $('.container-column div').attr('data-class','column');
+        $('.btns .btn').each(function(){
+            $(this).show();
+        })
+    })
 
     $('.toolbox form select').on('change',function(){
         node = $('option:selected',$(this)).val();
@@ -83,41 +107,53 @@ $(function() {
     $( "#selectable" ).selectable();
 
     $('.btn-ok-m').on('click',function(){
+        $(this).fadeOut(500);
         addClassCol($('.ui-selected'),'xs');
     })
     $('.btn-ok-t').on('click',function(){
+        $(this).fadeOut(500);
         addClassCol($('.ui-selected'),'sm');
     })
     $('.btn-ok-d').on('click',function(){
+        $(this).fadeOut(500);
         addClassCol($('.ui-selected'),'md');
     })
     $('.btn-ok-ld').on('click',function(){
+        $(this).fadeOut(500);
         addClassCol($('.ui-selected'),'lg');
     })
 
     $('.btn-ok-hm').on('click',function(){
+        $(this).fadeOut(500);
         addClassHidden($('.ui-selected'),'xs');
     })
     $('.btn-ok-ht').on('click',function(){
+        $(this).fadeOut(500);
         addClassHidden($('.ui-selected'),'sm');
     })
     $('.btn-ok-hd').on('click',function(){
+        $(this).fadeOut(500);
         addClassHidden($('.ui-selected'),'md');
     })
     $('.btn-ok-hld').on('click',function(){
+        $(this).fadeOut(500);
         addClassHidden($('.ui-selected'),'lg');
     })
 
     $('.btn-ok-vm').on('click',function(){
+        $(this).fadeOut(500);
         addClassVisible($('.ui-selected'),'xs');
     })
     $('.btn-ok-vt').on('click',function(){
+        $(this).fadeOut(500);
         addClassVisible($('.ui-selected'),'sm');
     })
     $('.btn-ok-vd').on('click',function(){
+        $(this).fadeOut(500);
         addClassVisible($('.ui-selected'),'md');
     })
     $('.btn-ok-vld').on('click',function(){
+        $(this).fadeOut(500);
         addClassVisible($('.ui-selected'),'lg');
     })
 
@@ -142,21 +178,3 @@ $(function() {
 
     })
 });
-
-// create template object
-function createLayout(container,obj){
-
-        // obj.tag = container.get(0).nodeName;
-        obj.tag = node;
-        obj.cssClass = container.attr('class');
-        obj.children = [];
-        
-        if(container.children().length > 0){
-            container.children().each(function(){
-                var child = {};
-                var children = obj.children;
-                children.push(child);
-                createLayout($(this),child);
-            })
-        };
-}

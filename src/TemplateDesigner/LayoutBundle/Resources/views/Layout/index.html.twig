@@ -7,7 +7,7 @@
 
 <div class="toolbox">
 	<form class="form-inline" role="form" action="{{path('layout_transform')}}" method="#">
-		<div class="form-group"><label for="name">Name:</label><input class="form-control" type="text" name="name"></div>
+		<div class="form-group"><label for="name">{% trans %}Name{% endtrans %}:</label><input class="form-control" type="text" name="name"></div>
 		<div class="form-group">
 			<select class="form-control">
 				<option value="div">Div</option>
@@ -28,38 +28,38 @@
 	<div class="clearfix"></div>
 	<div class="btns">
 		<div class="btns-primary">
-			<div class="btn btn-primary btn-xs btn-ok-m">Mobile</div>
-			<div class="btn btn-primary btn-xs btn-ok-t">Tablet</div>
-			<div class="btn btn-primary btn-xs btn-ok-d">Desktop</div>
-			<div class="btn btn-primary btn-xs btn-ok-ld">Large Desktop</div>
+			<div class="btn btn-primary btn-xs btn-ok-m">{% trans %}Mobile{% endtrans %}</div>
+			<div class="btn btn-primary btn-xs btn-ok-t">{% trans %}Tablet{% endtrans %}</div>
+			<div class="btn btn-primary btn-xs btn-ok-d">{% trans %}Desktop{% endtrans %}</div>
+			<div class="btn btn-primary btn-xs btn-ok-ld">{% trans %}Large Desktop{% endtrans %}</div>
 		</div>
 		<div class="btns-hidden">
-			<div class="btn btn-primary btn-xs btn-ok-hm">Hidden Mobile</div>
-			<div class="btn btn-primary btn-xs btn-ok-ht">Hidden Tablet</div>
-			<div class="btn btn-primary btn-xs btn-ok-hd">Hidden Desktop</div>
-			<div class="btn btn-primary btn-xs btn-ok-hld">Hidden Large Desktop</div>
+			<div class="btn btn-primary btn-xs btn-ok-hm">{% trans %}Hidden Mobile{% endtrans %}</div>
+			<div class="btn btn-primary btn-xs btn-ok-ht">{% trans %}Hidden Tablet{% endtrans %}</div>
+			<div class="btn btn-primary btn-xs btn-ok-hd">{% trans %}Hidden Desktop{% endtrans %}</div>
+			<div class="btn btn-primary btn-xs btn-ok-hld">{% trans %}Hidden Large Desktop{% endtrans %}</div>
 		</div>
 		<div class="btns.visible">
-			<div class="btn btn-primary btn-xs btn-ok-vm">Only visible Mobile</div>
-			<div class="btn btn-primary btn-xs btn-ok-vt">Only visible Tablet</div>
-			<div class="btn btn-primary btn-xs btn-ok-vd">Only visible Desktop</div>
-			<div class="btn btn-primary btn-xs btn-ok-vld">Only visible Large Desktop</div>
+			<div class="btn btn-primary btn-xs btn-ok-vm">{% trans %}Only visible Mobile{% endtrans %}</div>
+			<div class="btn btn-primary btn-xs btn-ok-vt">{% trans %}Only visible Tablet{% endtrans %}</div>
+			<div class="btn btn-primary btn-xs btn-ok-vd">{% trans %}Only visible Desktop{% endtrans %}</div>
+			<div class="btn btn-primary btn-xs btn-ok-vld">{% trans %}Only visible Large Desktop{% endtrans %}</div>
 		</div>
 		<div class="clearfix"></div>
 	</div>
 
 	<div class="containers clearfix">
 		<div class="container-row">
-			<div id="row" class="draggable">{% trans %}Row {% endtrans %}</div>
+			<div id="row" class="draggable">{% trans %}Row{% endtrans %}</div>
 		</div>
 		<div class="container-column">
-			<div style="display:none;" id="col" data-class="column" class="draggable">Column</div>
+			<div style="display:none;" id="col" data-class="column" class="draggable">{% trans %}Column{% endtrans %}</div>
 		</div>
 		{# <div class="container-container">
 			<div id="container" class="draggable">container</div>
 		</div> #}
 	</div>
-	<div class="btn btn-success btn-transform">Convert</div>
+	<div class="btn btn-success btn-transform">{% trans %}Convert{% endtrans %}</div>
 </div>
 
 <div class="root container droppable"></div>
