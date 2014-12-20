@@ -43,21 +43,21 @@ class TwigExtension extends \Twig_Extension {
      * @param string $string
      * @return template
      */
-    public function renderLayout ($rootName,$param=null,$position=null,$root=true) {
+    public function renderLayout ($rootName,$param=null,$position=null,$displayRootTag=true) {
         $template = $this->parameterTemplate;
         if($position){
             $parent = $this->em->getRepository('TemplateDesignerLayoutBundle:Layout')->findLayoutWitOptions($rootName,$position);
         }else{
            $parent = $this->em->getRepository('TemplateDesignerLayoutBundle:Layout')->findOneBy(array('name'=>$rootName)); 
         }
-        return $this->environment->render('TemplateDesignerLayoutBundle:Layout:macroLayout.html.twig',array('template'=>$template,'params'=>$param,'parent'=>$parent,'position'=>$position,'root'=>$root));
+        return $this->environment->render('TemplateDesignerLayoutBundle:Layout:macroLayout.html.twig',array('template'=>$template,'params'=>$param,'parent'=>$parent,'position'=>$position,'displayRootTag'=>$displayRootTag));
     }
 
         /**
      * @param string $string
      * @return string
      */
-    public function layoutStart ($rootName,$position=null,$root=false) {
+    public function layoutStart ($rootName,$position=null) {
         if($position){
             $parent = $this->em->getRepository('TemplateDesignerLayoutBundle:Layout')->findLayoutWitOptions($rootName,$position);
         }else{
@@ -71,7 +71,7 @@ class TwigExtension extends \Twig_Extension {
      * @param string $string
      * @return string
      */
-    public function layoutEnd ($rootName,$position=null,$root=false) {
+    public function layoutEnd ($rootName,$position=null) {
         if($position){
             $parent = $this->em->getRepository('TemplateDesignerLayoutBundle:Layout')->findLayoutWitOptions($rootName,$position);
         }else{

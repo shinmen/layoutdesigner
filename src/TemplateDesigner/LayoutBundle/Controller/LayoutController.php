@@ -3,7 +3,6 @@
 namespace TemplateDesigner\LayoutBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -28,7 +27,7 @@ class LayoutController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
+    public function createAction()
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -38,32 +37,6 @@ class LayoutController extends Controller
         return array(
             'entities' => $entities,
             'edit_form_twig'=>$edit_form_twig
-        );
-    }
-    /**
-     * Creates a new Layout entity.
-     *
-     * @Route("/", name="layout_create")
-     * @Method("POST")
-     * @Template("TemplateDesignerLayoutBundle:Layout:new.html.twig")
-     */
-    public function createAction(Request $request)
-    {
-        $entity = new Layout();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('layout_show', array('id' => $entity->getId())));
-        }
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
         );
     }
 
@@ -94,10 +67,10 @@ class LayoutController extends Controller
         if (count($errorList) == 0) {
             $em->flush();
             $this->recursiveTransform($children,$root,$root);
-            $i=0;
+            $i = 0;
             foreach ($root->getSubs() as $sub) {
                 $sub->setPosition(++$i);
-                $em->flush();
+                $em->flush($sub);
             } 
         }
         
@@ -106,7 +79,7 @@ class LayoutController extends Controller
 
     private function recursiveTransform($children,$root,$parent){
         $em = $this->getDoctrine()->getManager();
-        $helper = $this->get('layout.helper');
+        // $helper = $this->get('layout.helper');
 
         foreach ($children as $child) {
             $tag = $child['tag'];
@@ -120,52 +93,14 @@ class LayoutController extends Controller
             $em->persist($new);
             $root->addSub($new);
             $parent->addChild($new);
-            $em->flush();
+            $em->flush($child);
             if(isset($child['children'])){
                 $this->recursiveTransform($child['children'],$root,$new);
             }
         }
     }
 
-
     /**
-     * Creates a form to create a Layout entity.
-     *
-     * @param Layout $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateForm(Layout $entity)
-    {
-        $form = $this->createForm(new LayoutType(), $entity, array(
-            'action' => $this->generateUrl('layout_create'),
-            'method' => 'POST',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Create'));
-
-        return $form;
-    }
-
-    /**
-     * Displays a form to create a new Layout entity.
-     *
-     * @Route("/new", name="layout_new")
-     * @Method("GET")
-     * @Template()
-     */
-    public function newAction()
-    {
-        $entity = new Layout();
-        $form   = $this->createCreateForm($entity);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
-        /**
      * Displays a form to edit an existing Layout entity.
      *
      * @Route("/edit", name="layout_edition")
@@ -193,22 +128,9 @@ class LayoutController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function showAction($id)
+    public function showAction(Layout $entity)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('TemplateDesignerLayoutBundle:Layout')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Layout entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-        );
+        return array('entity'=> $entity);
     }
 
 
@@ -223,28 +145,24 @@ class LayoutController extends Controller
     public function editAction(Request $request)
     {
         
-        if($request->isXmlHttpRequest()){
-            $em = $this->getDoctrine()->getManager();
-            $id = $request->request->get('layout');
-            $entity = $em->getRepository('TemplateDesignerLayoutBundle:Layout')->find($id);
+        if(!$request->isXmlHttpRequest()){return $this->redirect($this->generateUrl('layout_edition'));}
 
-            if (!$entity) {
+        $em = $this->getDoctrine()->getManager();
+        $id = $request->request->get('layout');
+        $entity = $em->getRepository('TemplateDesignerLayoutBundle:Layout')->find($id);
+
+        if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Layout entity.');
-            }
-
-            $editForm = $this->createEditForm($entity);
-            $deleteForm = $this->createDeleteForm($id);
-
-            return array(
-                'entity'      => $entity,
-                'edit_form'   => $editForm->createView(),
-                'delete_form' => $deleteForm->createView(),
-            );
-        }else{
-            return $this->redirect($this->generateUrl('layout_edition'));
         }
 
-        
+        $editForm = $this->createEditForm($entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        return array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        );
     }
 
         /**
@@ -255,6 +173,7 @@ class LayoutController extends Controller
      */
     public function showTemplateAction(Request $request)
     {
+        if(!$request->isXmlHttpRequest()){return $this->redirect($this->generateUrl('layout_edition'));}
         $em = $this->getDoctrine()->getManager();
         $id = $request->request->get('root');
         $entity = $em->getRepository('TemplateDesignerLayoutBundle:Layout')->find($id);
@@ -301,16 +220,11 @@ class LayoutController extends Controller
      * @Method("PUT")
      * @Template("TemplateDesignerLayoutBundle:Layout:edit.html.twig")
      */
-    public function updateAction(Request $request, $id)
+    public function updateAction(Request $request, Layout $entity)
     {
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('TemplateDesignerLayoutBundle:Layout')->find($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Layout entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($entity->getId());
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
         if ($editForm->isValid()) {
@@ -365,18 +279,14 @@ class LayoutController extends Controller
      * @Route("/{id}", name="layout_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, Layout $entity)
     {
-        $form = $this->createDeleteForm($id);
+        $form = $this->createDeleteForm($entity->getId());
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('TemplateDesignerLayoutBundle:Layout')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Layout entity.');
-            }
+            
             $entity->getChildren()->clear();
 
             $em->remove($entity);

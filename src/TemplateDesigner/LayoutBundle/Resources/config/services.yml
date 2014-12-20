@@ -10,14 +10,17 @@ services:
 
   layout.params.action_listener:
         class: TemplateDesigner\LayoutBundle\EventListener\ParameterWrapperListener
-        arguments: ["@service_container"]
+        arguments: ["@templating"]
         tags:
             - { name: kernel.event_listener, event: kernel.view, method: onKernelView }
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
   layout.annotation.action_listener:
         class: TemplateDesigner\LayoutBundle\EventListener\LayoutAnnotationListener
         arguments: ["@annotation_reader","@doctrine.orm.entity_manager"]
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
+
   layout.data_collector.action_listener:
         class: TemplateDesigner\LayoutBundle\DataCollector\LayoutDataCollector
         tags:
@@ -25,13 +28,17 @@ services:
   route.manager:
         class: TemplateDesigner\LayoutBundle\Service\RouteManager
         arguments: ["@router"]
+
   template_finder:
         class: TemplateDesigner\LayoutBundle\Service\TemplateFinder
+        arguments: ["%kernel.root_dir%"]
+
   layout.doctrine.listener:
         class: TemplateDesigner\LayoutBundle\EventListener\LayoutDataListener
         arguments: ["%template_designer_layout.template_engine%"]
         tags:
             - { name: doctrine.event_listener, event: prePersist }
+
   layout.helper:
         class: TemplateDesigner\LayoutBundle\Service\LayoutHelper
         arguments: ["%template_designer_layout.template_engine%"]

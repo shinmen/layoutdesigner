@@ -6,10 +6,15 @@ use Symfony\Component\Finder\Finder;
  
 class TemplateFinder {
 
+    private $rootDir;
+
+    public function __construct($rootDir){
+        $this->rootDir = $rootDir;
+    }
 
     public function getFormattedTemplateForForm(){
         $finder = new Finder();
-        $finder->files()->in(__DIR__."/../../../../src/")->name('*.html.*');
+        $finder->files()->in($this->rootDir."/../src/")->name('*.html.*');
         $templates = array();
         
         foreach ($finder as $file) {

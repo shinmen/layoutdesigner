@@ -19,12 +19,12 @@
 
 {% import _self as layout %}
 {# if root == true, display root container #}
-{% if root is sameas(true) %}
+{% if displayRootTag is sameas(true) %}
     <{{parent.tag}} class="{{parent.cssClassesAsString}} {{parent.cssComplementClasses}}">
 {% endif %}
 
 {{layout.layout(parent,params,template)}}
 
-{% if root is sameas(true) %}
+{% if displayRootTag is sameas(true) %}
     </{{parent.tag}}>
 {% endif %}

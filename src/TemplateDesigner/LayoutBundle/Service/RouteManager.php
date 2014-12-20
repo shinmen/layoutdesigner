@@ -24,10 +24,11 @@ class RouteManager {
         foreach ($routes as $route) {
             $path = $route->getPath();
             $methods = $route->getMethods();
+            $routeDefaults = $route->getDefaults();
             if(!strpos($path, '_') && (in_array('GET', $methods)||empty($methods)) ){
                 $patterns = array('/Controller/',"/\\\/",'/::/','/Action/');
                 $replacements = array(':');
-                $action = preg_replace($patterns,$replacements,$route->getDefaults()['_controller']);
+                $action = preg_replace($patterns,$replacements,$routeDefaults['_controller']);
                 $formattedRoutes[$action]= $path; 
             }
         }

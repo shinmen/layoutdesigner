@@ -51,12 +51,6 @@ function createLayout(container,obj){
 }
 
 $(function() {
-    $('#selectable .ui-state-default').on('click',function(){
-        $('.container-column div').attr('data-class','column');
-        $('.btns .btn').each(function(){
-            $(this).show();
-        })
-    })
 
     $('.toolbox form select').on('change',function(){
         node = $('option:selected',$(this)).val();
@@ -82,6 +76,8 @@ $(function() {
             }
             else{
                 ui.draggable.addClass('droppable '+ui.draggable.attr('data-class')).attr('ondblclick','deleteElem(event,$(this)); return false;').html('');
+                $('.container-column div').attr('data-class','column');
+                $('.btns .btn').show();
                 
                 // add 50px height every two times
                 if($(this).children().length %2 == 0){
