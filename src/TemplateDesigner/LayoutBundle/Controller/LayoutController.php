@@ -70,7 +70,7 @@ class LayoutController extends Controller
             $i = 0;
             foreach ($root->getSubs() as $sub) {
                 $sub->setPosition(++$i);
-                $em->flush($sub);
+                $em->flush();
             } 
         }
         
@@ -79,7 +79,7 @@ class LayoutController extends Controller
 
     private function recursiveTransform($children,$root,$parent){
         $em = $this->getDoctrine()->getManager();
-        // $helper = $this->get('layout.helper');
+        $helper = $this->get('layout.helper');
 
         foreach ($children as $child) {
             $tag = $child['tag'];
@@ -93,7 +93,7 @@ class LayoutController extends Controller
             $em->persist($new);
             $root->addSub($new);
             $parent->addChild($new);
-            $em->flush($child);
+            $em->flush();
             if(isset($child['children'])){
                 $this->recursiveTransform($child['children'],$root,$new);
             }
