@@ -47,4 +47,4 @@ services:
   layout.event_listener.render_wrapper_subscriber:
         class: TemplateDesigner\LayoutBundle\EventListener\ParameterRenderWrapperListener
         tags:
-            - { name: kernel.event_listener, event: onPreRender }
+            - { name: kernel.event_subcriber }

@@ -65,12 +65,12 @@ class LayoutController extends Controller
         $errorList = $validator->validate($root);
         
         if (count($errorList) == 0) {
-            $em->flush();
+            $em->flush($root);
             $this->recursiveTransform($children,$root,$root);
             $i = 0;
             foreach ($root->getSubs() as $sub) {
                 $sub->setPosition(++$i);
-                $em->flush();
+                $em->flush($sub);
             } 
         }
         
@@ -93,7 +93,7 @@ class LayoutController extends Controller
             $em->persist($new);
             $root->addSub($new);
             $parent->addChild($new);
-            $em->flush();
+            $em->flush($new);
             if(isset($child['children'])){
                 $this->recursiveTransform($child['children'],$root,$new);
             }

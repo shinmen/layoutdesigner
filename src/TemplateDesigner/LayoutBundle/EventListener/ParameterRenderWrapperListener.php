@@ -34,7 +34,7 @@ class ParameterRenderWrapperListener implements EventSubscriberInterface
 	public static function getSubscribedEvents()
 	{
 		return [
-		DelegatingEngineEvents::PRE_RENDER => 'onPreRender'
+		EventableDelegatingEngine::PRE_RENDER => 'onPreRender'
 		];
 	}
 	/**
@@ -44,8 +44,8 @@ class ParameterRenderWrapperListener implements EventSubscriberInterface
 	public function onPreRender(DelegatingEngineEvent $event)
 	{
 		$templateParams = $event->getParams();
-		var_dump(array_keys($templateParams));
-		$event->stopPropagation();
+		var_dump('fdlsmkf');
+		// $event->stopPropagation();
 	// Do anything with filan set of template parameters
 	}
 } 

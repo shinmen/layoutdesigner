@@ -3,6 +3,7 @@
 namespace TemplateDesigner\LayoutBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernel;
 
 
@@ -80,11 +81,12 @@ class ParameterWrapperListener
         // https://korotovsky.io/2014/04/12/symfony2-and-twig-creating-apre_render-event/
         $response = $event->getResponse();
         $request = $event->getRequest();
-        if (HttpKernel::MASTER_REQUEST != $event->getRequestType()) {
+        if (!$event->isMasterRequest()) {
             // ne rien faire si ce n'est pas la requête principale
             return;
         }
         $routeParams = $request->attributes->get('_route_params');
+        // var_dump($response->getContent());
 
     }
 }
