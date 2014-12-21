@@ -44,7 +44,7 @@ services:
         class: TemplateDesigner\LayoutBundle\Service\LayoutHelper
         arguments: ["%template_designer_layout.template_engine%"]
 
-  layout.event_listener.render_wrapper_subscriber:
-        class: TemplateDesigner\LayoutBundle\EventListener\ParameterRenderWrapperListener
-        tags:
-            - { name: kernel.event_listener, event: onPreRender }
+  # layout.event_listener.render_wrapper_subscriber:
+  #       class: TemplateDesigner\LayoutBundle\EventListener\ParameterRenderWrapperListener
+  #       tags:
+  #           - { name: kernel.event_subscriber }
