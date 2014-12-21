@@ -1,5 +1,6 @@
 parameters:
     template_designer.layout_data_collector.template:  "TemplateDesignerLayoutBundle:DataCollector:template"
+    templating.engine.delegating.class: TemplateDesigner\LayoutBundle\Templating\EventableDelegatingEngine
 
 services:
   layout.twig.extension:
@@ -42,3 +43,8 @@ services:
   layout.helper:
         class: TemplateDesigner\LayoutBundle\Service\LayoutHelper
         arguments: ["%template_designer_layout.template_engine%"]
+
+  layout.event_listener.render_wrapper_subscriber:
+        class: TemplateDesigner\LayoutBundle\EventListener\ParameterRenderWrapperListener
+        tags:
+            - { name: kernel.event_listener, event: onPreRender }
