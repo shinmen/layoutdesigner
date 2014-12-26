@@ -14,7 +14,7 @@ services:
         arguments: ["@templating"]
         tags:
             - { name: kernel.event_listener, event: kernel.view, method: onKernelView }
-            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+            # - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
   layout.annotation.action_listener:
         class: TemplateDesigner\LayoutBundle\EventListener\LayoutAnnotationListener
@@ -44,7 +44,7 @@ services:
         class: TemplateDesigner\LayoutBundle\Service\LayoutHelper
         arguments: ["%template_designer_layout.template_engine%"]
 
-  # layout.event_listener.render_wrapper_subscriber:
-  #       class: TemplateDesigner\LayoutBundle\EventListener\ParameterRenderWrapperListener
-  #       tags:
-  #           - { name: kernel.event_subscriber }
+  layout.event_listener.render_wrapper_subscriber:
+        class: TemplateDesigner\LayoutBundle\EventListener\ParameterRenderWrapperListener
+        tags:
+            - { name: kernel.event_subscriber }

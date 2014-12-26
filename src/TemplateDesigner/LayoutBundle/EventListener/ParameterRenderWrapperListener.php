@@ -43,9 +43,15 @@ class ParameterRenderWrapperListener implements EventSubscriberInterface
 	*/
 	public function onPreRender(DelegatingEngineEvent $event)
 	{
-		$templateParams = $event->getParams();
-		var_dump(array_keys($templateParams));
-		$event->stopPropagation();
-	// Do anything with filan set of template parameters
+		$templateParams = $event->getParameters();
+		$routeParams = $event->getRequest()->attributes->get('_route_params');
+    	// get injected layout entity from annotation and add it to the paramaters
+    	if(isset($routeParams['rootLayout'])){
+    		$templateParams['rootLayout'] = $routeParams['rootLayout'];
+    	}
+		// wrap all parameters in params array
+    	$templateParams['params'] = $templateParams;
+    	$event->setParameters($templateParams);
+
 	}
 } 

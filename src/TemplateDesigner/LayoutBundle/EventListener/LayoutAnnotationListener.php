@@ -36,10 +36,10 @@ class LayoutAnnotationListener {
                 } catch (\Exception $e) {
                     throw new \Exception("parameter missing in layout annotation", 1);
                 }
+
                 $route_params = $event->getRequest()->attributes->get('_route_params');
                 $route_params['rootLayout'] = $root;
-                $event->getRequest()->attributes->set('_route_params',$route_params);
-                
+                $event->getRequest()->attributes->set('_route_params',$route_params);                
             }
         }
     }

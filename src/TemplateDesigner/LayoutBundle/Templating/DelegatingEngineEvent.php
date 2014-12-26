@@ -2,6 +2,8 @@
 namespace TemplateDesigner\LayoutBundle\Templating;
 
 use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 
 class DelegatingEngineEvent extends Event
@@ -36,6 +38,14 @@ class DelegatingEngineEvent extends Event
 	public function getParameters()
 	{
 		return $this->parameters;
+	}
+
+		/**
+	* @return array
+	*/
+	public function setParameters($parameters)
+	{
+		$this->parameters=$parameters;
 	}
 	/**
 	* @return Response

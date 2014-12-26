@@ -22,9 +22,10 @@ class EventableDelegatingEngine extends DelegatingEngine
 	{
 		$event = new DelegatingEngineEvent($view, $parameters, $response, $this->getRequest());
 		$this->getEventDispatcher()->dispatch(DelegatingEngineEvents::PRE_RENDER, $event);
-
+		
 		return parent::renderResponse($event->getView(), $event->getParameters(), $event->getResponse());
 	}
+
 	/**
 	* @return EventDispatcherInterface
 	*/

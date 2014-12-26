@@ -10,12 +10,12 @@ use TemplateDesigner\LayoutBundle\Annotation\LayoutAnnotation;
 use Tool\ToolBundle\Entity\MyLayout;
 use Tool\ToolBundle\Entity\Content;
 
-class DefaultController extends BaseController
+class DefaultController extends Controller
 {
     /**
      * @Route("/youhou/hello/{name}")
      * @Template()
-     * @LayoutAnnotation(name="re")
+     * @LayoutAnnotation(name="test")
      */
     public function indexAction($name)
     {
