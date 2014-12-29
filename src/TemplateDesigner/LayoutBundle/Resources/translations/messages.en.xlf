@@ -166,6 +166,10 @@
                 <source>Select a sub layout</source>
                 <target>Select a sub layout</target>
             </trans-unit>
+            <trans-unit id="42">
+                <source>Delete</source>
+                <target>Delete</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

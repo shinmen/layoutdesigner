@@ -15,7 +15,7 @@ class DefaultController extends Controller
     /**
      * @Route("/youhou/hello/{name}")
      * @Template()
-     * @LayoutAnnotation(name="dfdf")
+     * @LayoutAnnotation(name="re")
      */
     public function indexAction($name)
     {

@@ -14,7 +14,7 @@ class LayoutRepository extends EntityRepository
 {
 
 	public function findLayoutWitOptions($rootName,$position){
-		$qb= $this->getEntityManager()->createQueryBuilder();
+		$qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb ->select('l')
             ->from('TemplateDesignerLayoutBundle:Layout','l')

@@ -9,6 +9,11 @@ use TemplateDesigner\LayoutBundle\Model\Layout;
 class CssClassesTransformer implements DataTransformerInterface
 {
 
+    private $helper;
+
+    public function __construct($helper){
+        $this->helper = $helper;
+    }
 
     /**
      * Transforms an array (cssClasses) to a string (cssClasses). Display
@@ -40,22 +45,7 @@ class CssClassesTransformer implements DataTransformerInterface
             return null;
         }
         
-        $classesWrapper = array();
-        foreach ($cssClasses as $key => $value) {
-            if(strpos($value, 'col')!== false && !in_array('column',$cssClasses)){    
-                $cssClasses[]='column';
-            }
-        }
-
-        if(in_array('row', $cssClasses)){
-            $cssClasses = array('row');
-        }
-
-        if(in_array('container', $cssClasses)){
-            $cssClasses = array('container');
-        }
-
-        $classesWrapper[0] = $cssClasses;
+        $classesWrapper = $this->helper->reverseTransformForm($cssClasses);
         
         return $classesWrapper;
         

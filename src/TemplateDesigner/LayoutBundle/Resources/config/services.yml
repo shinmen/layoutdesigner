@@ -41,7 +41,7 @@ services:
 
   layout.helper:
         class: TemplateDesigner\LayoutBundle\Service\LayoutHelper
-        arguments: ["%template_designer_layout.template_engine%"]
+        arguments: ["@doctrine.orm.entity_manager","%template_designer_layout.template_engine%"]
 
   layout.event_listener.render_wrapper_subscriber:
         class: TemplateDesigner\LayoutBundle\EventListener\ParameterRenderWrapperListener
