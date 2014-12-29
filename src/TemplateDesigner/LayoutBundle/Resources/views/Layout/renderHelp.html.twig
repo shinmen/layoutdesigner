@@ -3,7 +3,7 @@
 	{% include child.include with {name:params['name']} %}
 {% endif %}
 
-{% if child.root.name == "re" and child.custom == "second" %}
-	{# {% render(path(child.render,{name:params['vroom']})) %} #}
-	{% include child.include with {name:params['name'],vroom:params['vroom']} %}
+{% if child.root.name == "dfdf" and child.custom == "second" %}
+	{% render(controller(child.render,{name:params['name']})) %}
+	{# {% include child.include with {name:params['name'],vroom:params['vroom']} %} #}
 {% endif %}

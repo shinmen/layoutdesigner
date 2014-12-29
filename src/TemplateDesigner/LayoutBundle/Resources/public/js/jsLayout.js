@@ -158,7 +158,7 @@ $(function() {
 
 
     $('.btn-transform').on('click',function(){
-        if(confirm('Do you wish to confirm?')){
+        if(confirm($(this).attr('data-confirm'))){
             container = $('.container.root');
             createLayout(container,layout);
             var name = $('form input[name="name"]').val();
@@ -168,7 +168,7 @@ $(function() {
                 url:url,
                 data: {name:name, layout:layout}
             }).done(function(data){
-                
+                alertColumn($(this).attr('data-success'));
             })
         }
 

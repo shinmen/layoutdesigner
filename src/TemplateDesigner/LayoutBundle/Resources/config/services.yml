@@ -4,7 +4,7 @@ parameters:
 
 services:
   layout.twig.extension:
-    class: TemplateDesigner\LayoutBundle\Twig\TwigExtension # <--- here
+    class: TemplateDesigner\LayoutBundle\Twig\TwigExtension
     arguments: ["@doctrine.orm.entity_manager","%template_designer_layout.custom_param_template%"]
     tags:
       - { name: twig.extension }
@@ -14,7 +14,6 @@ services:
         arguments: ["@templating"]
         tags:
             - { name: kernel.event_listener, event: kernel.view, method: onKernelView }
-            # - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
   layout.annotation.action_listener:
         class: TemplateDesigner\LayoutBundle\EventListener\LayoutAnnotationListener
@@ -47,4 +46,5 @@ services:
   layout.event_listener.render_wrapper_subscriber:
         class: TemplateDesigner\LayoutBundle\EventListener\ParameterRenderWrapperListener
         tags:
-            - { name: kernel.event_subscriber }
+            #- { name: kernel.event_subscriber }
+            - { name: kernel.event_listener, event: eventable_delegating_engine.pre_render, method: onPreRender }

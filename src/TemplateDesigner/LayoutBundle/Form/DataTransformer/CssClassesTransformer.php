@@ -21,13 +21,7 @@ class CssClassesTransformer implements DataTransformerInterface
         if (null === $cssClasses) {
             return "";
         }
-        // if(!empty($cssClasses)){
-        //     if(is_array($cssClasses[0])){
-        //         $cssClasses = implode(' ', $cssClasses[0]);
-        //     }else{
-        //         $cssClasses = $cssClasses[0];
-        //     } 
-        // }
+
         $cssClasses = (is_array($cssClasses[0]))? $cssClasses[0] :$cssClasses;
         
         return $cssClasses;
@@ -45,8 +39,6 @@ class CssClassesTransformer implements DataTransformerInterface
         if (!$cssClasses) {
             return null;
         }
-        // $delimiter = strpos($cssClasses,',')?',':' ';
-        // $cssClasses = explode($delimiter, $cssClasses);
         
         $classesWrapper = array();
         foreach ($cssClasses as $key => $value) {

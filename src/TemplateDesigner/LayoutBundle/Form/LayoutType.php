@@ -41,7 +41,7 @@ class LayoutType extends AbstractType
             $form = $event->getForm();
 
             if ($layout && null === $layout->getParent() ) {
-               $form->add('name',null,array('label'=>'Layout Name','required'=>false));
+               $form->add('name',null,array('label'=>'Layout Name','required'=>true));
             }
         });
     }

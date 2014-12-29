@@ -4,55 +4,55 @@
         <body>
             <trans-unit id="1">
                 <source>Mobile</source>
-                <target>Smartphone</target>
+                <target>Mobile</target>
             </trans-unit>
             <trans-unit id="2">
                 <source>Tablet</source>
-                <target>Tablette</target>
+                <target>Tablet</target>
             </trans-unit>
             <trans-unit id="3">
                 <source>Desktop</source>
-                <target>Ecran</target>
+                <target>Desktop</target>
             </trans-unit>
             <trans-unit id="4">
                 <source>Large Desktop</source>
-                <target>Grand Ecran</target>
+                <target>Large Desktop</target>
             </trans-unit>
             <trans-unit id="5">
                 <source>Hidden Mobile</source>
-                <target>Caché sur smartphone</target>
+                <target>Hidden Mobile</target>
             </trans-unit>
             <trans-unit id="6">
                 <source>Hidden Tablet</source>
-                <target>Caché sur tablette</target>
+                <target>Hidden Tablet</target>
             </trans-unit>
             <trans-unit id="7">
                 <source>Hidden Desktop</source>
-                <target>Caché sur écran</target>
+                <target>Hidden Desktop</target>
             </trans-unit>
             <trans-unit id="8">
                 <source>Hidden Large Desktop</source>
-                <target>Caché sur grand écran</target>
+                <target>Hidden Large Desktop</target>
             </trans-unit>
             <trans-unit id="9">
                 <source>Only visible Mobile</source>
-                <target>Visible uniquement sur smartphone</target>
+                <target>Only visible Mobile</target>
             </trans-unit>
             <trans-unit id="10">
                 <source>Only visible Tablet</source>
-                <target>Visible uniquement sur tablette</target>
+                <target>Only visible Tablet</target>
             </trans-unit>
             <trans-unit id="11">
                 <source>Only visible Desktop</source>
-                <target>Visible uniquement sur écran</target>
+                <target>Only visible Desktop</target>
             </trans-unit>
             <trans-unit id="12">
                 <source>Only visible Large Desktop</source>
-                <target>Visible uniquement sur grand écran</target>
+                <target>Only visible Large Desktop</target>
             </trans-unit>
             <trans-unit id="13">
                 <source>Name</source>
-                <target>Nom</target>
+                <target>Name</target>
             </trans-unit>
             <trans-unit id="14">
                 <source>Div</source>
@@ -72,47 +72,47 @@
             </trans-unit>
             <trans-unit id="18">
                 <source>Row</source>
-                <target>Ligne</target>
+                <target>Row</target>
             </trans-unit>
             <trans-unit id="19">
                 <source>Column</source>
-                <target>Colone</target>
+                <target>Column</target>
             </trans-unit>
             <trans-unit id="20">
                 <source>Container</source>
-                <target>Conteneur</target>
+                <target>Container</target>
             </trans-unit>
             <trans-unit id="21">
                 <source>Convert</source>
-                <target>Convertir</target>
+                <target>Convert</target>
             </trans-unit>
             <trans-unit id="22">
                 <source>Do you wish to confirm?</source>
-                <target>Voulez-vous confirmer?</target>
+                <target>Do you wish to confirm?</target>
             </trans-unit>
             <trans-unit id="23">
                 <source>Layout converted</source>
-                <target>Modèle converti</target>
+                <target>Layout converted</target>
             </trans-unit>
             <trans-unit id="24">
                 <source>Select a Layout</source>
-                <target>Sélectionnez un modèle</target>
+                <target>Select a Layout</target>
             </trans-unit>
             <trans-unit id="25">
                 <source>Layout class element</source>
-                <target>Classe de l'élément</target>
+                <target>Layout class element</target>
             </trans-unit>
             <trans-unit id="26">
                 <source>Layouts</source>
-                <target>Modèles</target>
+                <target>Layouts</target>
             </trans-unit>
             <trans-unit id="27">
                 <source>Tag element</source>
-                <target>Balise de l'élément</target>
+                <target>Tag element</target>
             </trans-unit>
             <trans-unit id="28">
                 <source>Select a tag</source>
-                <target>Sélectionnez une balise</target>
+                <target>Select a tag</target>
             </trans-unit>
             <trans-unit id="29">
                 <source>div</source>
@@ -120,51 +120,51 @@
             </trans-unit>
             <trans-unit id="30">
                 <source>Id element</source>
-                <target>Id de l'élément</target>
+                <target>Id element</target>
             </trans-unit>
             <trans-unit id="31">
                 <source>Render</source>
-                <target>Rendu</target>
+                <target>Render</target>
             </trans-unit>
             <trans-unit id="32">
                 <source>Select a path</source>
-                <target>Sélectionnez un chemin</target>
+                <target>Select a path</target>
             </trans-unit>
             <trans-unit id="33">
                 <source>Include</source>
-                <target>Inclusion</target>
+                <target>Include</target>
             </trans-unit>
             <trans-unit id="34">
                 <source>Select a template</source>
-                <target>Sélectionner une page</target>
+                <target>Select a template</target>
             </trans-unit>
             <trans-unit id="35">
                 <source>Custom parameters</source>
-                <target>Paramètres personnalisés</target>
+                <target>Custom parameters</target>
             </trans-unit>
             <trans-unit id="36">
                 <source>Additionnal class element</source>
-                <target>Classe supplémentaire de l'élément</target>
+                <target>Additionnal class element</target>
             </trans-unit>
             <trans-unit id="37">
                 <source>Add a child</source>
-                <target>Ajouter un sous élément</target>
+                <target>Add a child</target>
             </trans-unit>
             <trans-unit id="38">
                 <source>Update</source>
-                <target>Mettre à jour</target>
+                <target>Update</target>
             </trans-unit>
             <trans-unit id="39">
                 <source>Layout Name</source>
-                <target>Nom du modèle</target>
+                <target>Layout Name</target>
             </trans-unit>
             <trans-unit id="40">
                 <source>Sub-Layout</source>
-                <target>Sous-élément</target>
+                <target>Sub-Layout</target>
             </trans-unit>
             <trans-unit id="41">
                 <source>Select a sub layout</source>
-                <target>Sélectionnez un sous-élément</target>
+                <target>Select a sub layout</target>
             </trans-unit>
         </body>
     </file>

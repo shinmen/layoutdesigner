@@ -29,13 +29,9 @@ class LayoutController extends Controller
      */
     public function createAction()
     {
-        $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('TemplateDesignerLayoutBundle:Layout')->findAll();
         $edit_form_twig = $this->container->getParameter('template_designer_layout.edit_form_twig');
-
         return array(
-            'entities' => $entities,
             'edit_form_twig'=>$edit_form_twig
         );
     }
@@ -61,16 +57,15 @@ class LayoutController extends Controller
         $root->setPosition(0);
         $root->setName($name);
         $em->persist($root);
-        $validator = $this->get('validator');
-        $errorList = $validator->validate($root);
+        $errorList = $this->get('validator')->validate($root);
         
         if (count($errorList) == 0) {
-            $em->flush();
+            $em->flush($root);
             $this->recursiveTransform($children,$root,$root);
             $i = 0;
             foreach ($root->getSubs() as $sub) {
                 $sub->setPosition(++$i);
-                $em->flush();
+                $em->flush($sub);
             } 
         }
         
@@ -93,7 +88,7 @@ class LayoutController extends Controller
             $em->persist($new);
             $root->addSub($new);
             $parent->addChild($new);
-            $em->flush();
+            $em->flush($new);
             if(isset($child['children'])){
                 $this->recursiveTransform($child['children'],$root,$new);
             }
@@ -109,7 +104,6 @@ class LayoutController extends Controller
      */
     public function editLayoutAction()
     {
-        $em = $this->getDoctrine()->getManager();
         $entity = new Layout();
         $editForm = $this->createForm(new LayoutEditionType(),$entity);
         $edit_form_twig = $this->container->getParameter('template_designer_layout.edit_form_twig');
@@ -130,7 +124,10 @@ class LayoutController extends Controller
      */
     public function showAction(Layout $entity)
     {
-        return array('entity'=> $entity);
+        $edit_form_twig = $this->container->getParameter('template_designer_layout.edit_form_twig');
+        return array(
+            'entity'=> $entity,
+            'edit_form_twig'=>$edit_form_twig);
     }
 
 
@@ -207,8 +204,6 @@ class LayoutController extends Controller
             'tags'   => $tags,
             'templates' => $templates
         ));
-
-        
 
         return $form;
     }
@@ -325,7 +320,8 @@ class LayoutController extends Controller
         $root_id = $request->request->get('root');
         $em = $this->getDoctrine()->getManager();
         $root = $em->getRepository('TemplateDesignerLayoutBundle:Layout')->find($root_id);
-        $subs = $em->getRepository('TemplateDesignerLayoutBundle:Layout')->findBy(array('root'=>$root));
+        // $subs = $em->getRepository('TemplateDesignerLayoutBundle:Layout')->findBy(array('root'=>$root));
+        $subs = $root->getSubs()->toArray();
         array_unshift($subs, $root);
         return array('subs'=>$subs);
     }

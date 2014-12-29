@@ -4,6 +4,7 @@ use Doctrine\Common\Annotations\Reader;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Doctrine\ORM\EntityManager;
 use TemplateDesigner\LayoutBundle\Annotation\LayoutAnnotation;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  
 class LayoutAnnotationListener {
 
@@ -27,14 +28,17 @@ class LayoutAnnotationListener {
  
         foreach($annotations as $annotation){
             if($annotation instanceof LayoutAnnotation) {
-                try {
-                    if($annotation->getPosition()){
-                        $root = $this->em->getRepository('TemplateDesignerLayoutBundle:Layout')->findLayoutWitOptions($annotation->getName(),$annotation->getPosition());
-                    }else{
-                        $root = $this->em->getRepository('TemplateDesignerLayoutBundle:Layout')->findOneBy(array('name'=>$annotation->getName()));
-                    }
-                } catch (\Exception $e) {
-                    throw new \Exception("parameter missing in layout annotation", 1);
+                if($annotation->getPosition()){
+                    $root = $this->em->getRepository('TemplateDesignerLayoutBundle:Layout')->findLayoutWitOptions($annotation->getName(),$annotation->getPosition());
+                }else{
+                    $root = $this->em->getRepository('TemplateDesignerLayoutBundle:Layout')->findOneBy(array('name'=>$annotation->getName()));
+                }
+                if(!$annotation->getPosition() && !$annotation->getName()){
+                    throw new \Exception("Parameter missing in layout annotation", 1);
+                }
+                if(!$root){
+                    throw new NotFoundHttpException('Layout not found');
+                    
                 }
 
                 $route_params = $event->getRequest()->attributes->get('_route_params');

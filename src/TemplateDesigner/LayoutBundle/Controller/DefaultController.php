@@ -15,7 +15,7 @@ class DefaultController extends Controller
     /**
      * @Route("/youhou/hello/{name}")
      * @Template()
-     * @LayoutAnnotation(name="test")
+     * @LayoutAnnotation(name="dfdf")
      */
     public function indexAction($name)
     {
@@ -32,7 +32,8 @@ class DefaultController extends Controller
      */
     public function testAction($name)
     {
-        
+        return $this->render('TemplateDesignerLayoutBundle:Default:test.html.twig',array('name'=>$name,'vroom'=>'youhou'));
+
         return array('name' => $name,'vroom'=>'vroom');
     }
 }

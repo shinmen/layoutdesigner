@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 class DelegatingEngineEvent extends Event
 {
 	protected $view;
-	protected $parameters = [];
+	protected $parameters = array();
 	protected $response;
 	protected $request;
 	/**

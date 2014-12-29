@@ -32,7 +32,6 @@ class LayoutEditionType extends AbstractType
             );
         $builder
             ->addEventSubscriber(new AddSubLayoutFieldSubscriber('subs'));
-            // ->add('submit','submit');
 
     }
     

@@ -73,15 +73,4 @@ class ParameterWrapperListener
     	}
     }
 
-    // public function onKernelResponse(FilterResponseEvent $event)
-    // {
-    //     // https://korotovsky.io/2014/04/12/symfony2-and-twig-creating-apre_render-event/
-    //     $response = $event->getResponse();
-    //     $request = $event->getRequest();
-    //     if (!$event->isMasterRequest()) {
-    //         // ne rien faire si ce n'est pas la requête principale
-    //         return;
-    //     }
-
-    // }
 }
