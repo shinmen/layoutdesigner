@@ -10,10 +10,10 @@
 		<div class="form-group"><label for="name">{% trans %}Name{% endtrans %}:</label><input class="form-control" type="text" name="name"></div>
 		<div class="form-group">
 			<select class="form-control">
-				<option value="div">Div</option>
-				<option value="nav">Nav</option>
-				<option value="article">Article</option>
-				<option value="section">Section</option>
+				<option value="div">{% trans %}Div{% endtrans %}</option>
+				<option value="nav">{% trans %}Nav{% endtrans %}</option>
+				<option value="article">{% trans %}Article{% endtrans %}</option>
+				<option value="section">{% trans %}Section{% endtrans %}</option>
 {# 				<option value="p">Paragraph</option> #}
 			</select>
 		</div>
@@ -59,7 +59,7 @@
 			<div id="container" class="draggable">container</div>
 		</div> #}
 	</div>
-	<div class="btn btn-success btn-transform">{% trans %}Convert{% endtrans %}</div>
+	<div data-message="{% trans %}Do you wish to confirm?{% endtrans %}" data-success="{% trans %}Layout converted{% endtrans %}" class="btn btn-success btn-transform">{% trans %}Convert{% endtrans %}</div>
 </div>
 
 <div class="root container droppable"></div>

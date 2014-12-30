@@ -29,13 +29,8 @@ class LayoutController extends Controller
      */
     public function createAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('TemplateDesignerLayoutBundle:Layout')->findAll();
         $edit_form_twig = $this->container->getParameter('template_designer_layout.edit_form_twig');
-
         return array(
-            'entities' => $entities,
             'edit_form_twig'=>$edit_form_twig
         );
     }
@@ -52,52 +47,22 @@ class LayoutController extends Controller
         $layout = $request->get('layout');
         $name = $request->get('name');
         $tag = $layout['tag'];
-        $temp = $layout['cssClass'];
+        $classes = $layout['cssClass'];
         $children = $layout['children'];
-        preg_match('[container]', $temp,$matches);
-        $root = new Layout();
-        $root->setCssClasses($matches);
-        $root->setTag($tag);
-        $root->setPosition(0);
-        $root->setName($name);
-        $em->persist($root);
-        $validator = $this->get('validator');
-        $errorList = $validator->validate($root);
+
+        $root = $helper->transform($layout,$name,$classes,$tag);
+        $errorList = $this->get('validator')->validate($root);
         
         if (count($errorList) == 0) {
             $em->flush($root);
-            $this->recursiveTransform($children,$root,$root);
+            $helper->recursiveTransform($children,$root,$root);
             $i = 0;
             foreach ($root->getSubs() as $sub) {
                 $sub->setPosition(++$i);
                 $em->flush($sub);
             } 
         }
-        
         return new JsonResponse($errorList);
-    }
-
-    private function recursiveTransform($children,$root,$parent){
-        $em = $this->getDoctrine()->getManager();
-        $helper = $this->get('layout.helper');
-
-        foreach ($children as $child) {
-            $tag = $child['tag'];
-            $temp = $child['cssClass'];
-            $matches = $helper->extractClasses($temp);
-            $new = new Layout();
-            $new->setCssClasses($matches);
-            $new->setTag($tag);
-            $new->setRoot($root);
-            $new->setParent($parent);
-            $em->persist($new);
-            $root->addSub($new);
-            $parent->addChild($new);
-            $em->flush($new);
-            if(isset($child['children'])){
-                $this->recursiveTransform($child['children'],$root,$new);
-            }
-        }
     }
 
     /**
@@ -109,7 +74,6 @@ class LayoutController extends Controller
      */
     public function editLayoutAction()
     {
-        $em = $this->getDoctrine()->getManager();
         $entity = new Layout();
         $editForm = $this->createForm(new LayoutEditionType(),$entity);
         $edit_form_twig = $this->container->getParameter('template_designer_layout.edit_form_twig');
@@ -119,21 +83,6 @@ class LayoutController extends Controller
             'edit_form_twig'=>$edit_form_twig
         );
     }
-
-
-    /**
-     * Finds and displays a Layout entity.
-     *
-     * @Route("/{id}", name="layout_show")
-     * @Method("GET")
-     * @Template()
-     */
-    public function showAction(Layout $entity)
-    {
-        return array('entity'=> $entity);
-    }
-
-
 
 
     /**
@@ -150,11 +99,9 @@ class LayoutController extends Controller
         $em = $this->getDoctrine()->getManager();
         $id = $request->request->get('layout');
         $entity = $em->getRepository('TemplateDesignerLayoutBundle:Layout')->find($id);
-
         if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Layout entity.');
         }
-
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
@@ -165,7 +112,7 @@ class LayoutController extends Controller
         );
     }
 
-        /**
+    /**
      * Displays a layout template of an existing Layout entity.
      *
      * @Route("/show_ajax", name="layout_show_layout")
@@ -205,10 +152,9 @@ class LayoutController extends Controller
             'routes' => $routes,
             'css'    => $css,
             'tags'   => $tags,
-            'templates' => $templates
+            'templates' => $templates,
+            'helper'    => $helper
         ));
-
-        
 
         return $form;
     }
@@ -251,6 +197,7 @@ class LayoutController extends Controller
             return $this->redirect($this->generateUrl('layout_edition'));
         }
         $em = $this->getDoctrine()->getManager();
+        $helper = $this->get('layout.helper');
         $id = $request->request->get('parent');
         $entity = $em->getRepository('TemplateDesignerLayoutBundle:Layout')->find($id);
 
@@ -260,9 +207,8 @@ class LayoutController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
-        $editForm->handleRequest($request);
-        $newChild = $this->addChildToEntity($entity);
-        $em->flush();
+        $newChild = $helper->addChildToEntity($entity);
+        $em->flush();         
 
         return array(
             'entity'      => $entity,
@@ -286,9 +232,7 @@ class LayoutController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            
             $entity->getChildren()->clear();
-
             $em->remove($entity);
             $em->flush();
         }
@@ -325,35 +269,8 @@ class LayoutController extends Controller
         $root_id = $request->request->get('root');
         $em = $this->getDoctrine()->getManager();
         $root = $em->getRepository('TemplateDesignerLayoutBundle:Layout')->find($root_id);
-        $subs = $em->getRepository('TemplateDesignerLayoutBundle:Layout')->findBy(array('root'=>$root));
+        $subs = $root->getSubs()->toArray();
         array_unshift($subs, $root);
         return array('subs'=>$subs);
-    }
-
-    private function addChildToEntity($entity){
-
-        $cloned = clone($entity);
-        $cloned->setName(null);
-        $cloned->setCssComplementClasses('');
-        if($root = $entity->getRoot()){
-            $position = $root->getSubs()->count() + 1;
-            $cloned->setParent($entity);
-            $cloned->setRoot($root);
-        }else{
-            $position = $entity->getSubs()->count() + 1;
-            $cloned->setParent($entity);
-            $cloned->setRoot($entity);
-        }
-        $cloned->setPosition($position);
-        $classes = (is_array($entity->getCssClasses()[0]))?$entity->getCssClasses()[0] :$entity->getCssClasses();
-        if(in_array('container', $classes)){
-            $cloned->setCssClasses(array('row'));
-        }elseif (in_array('column', $classes)) {
-            $cloned->setCssClasses(array('row'));
-        }elseif (in_array('row', $classes)) {
-            $cloned->setCssClasses(array(array('col-xs-12','column')));
-        }
-        $entity->addChild($cloned);
-        return $cloned;
     }
 }

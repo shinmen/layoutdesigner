@@ -10,7 +10,7 @@ use TemplateDesigner\LayoutBundle\Annotation\LayoutAnnotation;
 use Tool\ToolBundle\Entity\MyLayout;
 use Tool\ToolBundle\Entity\Content;
 
-class DefaultController extends BaseController
+class DefaultController extends Controller
 {
     /**
      * @Route("/youhou/hello/{name}")
@@ -32,7 +32,8 @@ class DefaultController extends BaseController
      */
     public function testAction($name)
     {
-        
+        return $this->render('TemplateDesignerLayoutBundle:Default:test.html.twig',array('name'=>$name,'vroom'=>'youhou'));
+
         return array('name' => $name,'vroom'=>'vroom');
     }
 }

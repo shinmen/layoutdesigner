@@ -18,11 +18,12 @@ class LayoutType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         
-        $transformer = new CssClassesTransformer();
         $routes = $options['routes'];
         $css = $options['css'];
         $tags = $options['tags'];
         $templates = $options['templates'];
+        $helper = $options['helper'];
+        $transformer = new CssClassesTransformer($helper);
         $builder
             
             ->add($builder->create('cssClasses','choice', array('label'=>'Layout class element','choices'=>$css,'multiple'=>true))
@@ -41,7 +42,7 @@ class LayoutType extends AbstractType
             $form = $event->getForm();
 
             if ($layout && null === $layout->getParent() ) {
-               $form->add('name',null,array('label'=>'Layout Name','required'=>false));
+               $form->add('name',null,array('label'=>'Layout Name','required'=>true));
             }
         });
     }
@@ -57,6 +58,7 @@ class LayoutType extends AbstractType
             'css'        => null,
             'tags'       => null,
             'templates'  => null,
+            'helper'     => null,
         ));
     }
 

@@ -49,9 +49,7 @@ class ParameterWrapperListener
     		foreach ($vars as $var) {
     			$parameters[$var] = $request->attributes->get($var);
     		}
-    	}else{
-            
-        }
+    	}
         $routeParams = $request->attributes->get('_route_params');
     	// get injected layout entity from annotation and add it to the paramaters
     	if(isset($routeParams['rootLayout'])){
@@ -76,17 +74,4 @@ class ParameterWrapperListener
     	}
     }
 
-    public function onKernelResponse(FilterResponseEvent $event)
-    {
-        // https://korotovsky.io/2014/04/12/symfony2-and-twig-creating-apre_render-event/
-        $response = $event->getResponse();
-        $request = $event->getRequest();
-        if (!$event->isMasterRequest()) {
-            // ne rien faire si ce n'est pas la requête principale
-            return;
-        }
-        $routeParams = $request->attributes->get('_route_params');
-        // var_dump($response->getContent());
-
-    }
 }

@@ -22,21 +22,8 @@ class EventableDelegatingEngine extends DelegatingEngine
 	{
 		$event = new DelegatingEngineEvent($view, $parameters, $response, $this->getRequest());
 		$this->getEventDispatcher()->dispatch(DelegatingEngineEvents::PRE_RENDER, $event);
+		
 		return parent::renderResponse($event->getView(), $event->getParameters(), $event->getResponse());
-	}
-
-	/**
-	* @param string $view
-	* @param array $parameters
-	* @param Response $response
-	* @return Response|void
-	*/
-	public function render($view, array $parameters = array())
-	{
-		$event = new DelegatingEngineEvent($view, $parameters, $response, $this->getRequest());
-		$this->getEventDispatcher()->dispatch(DelegatingEngineEvents::PRE_RENDER, $event);
-		var_dump('expression');
-		return parent::render($event->getView(), $event->getParameters());
 	}
 
 	/**
