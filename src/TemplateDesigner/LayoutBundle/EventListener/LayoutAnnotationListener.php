@@ -37,8 +37,7 @@ class LayoutAnnotationListener {
                     throw new \Exception("Parameter missing in layout annotation", 1);
                 }
                 if(!$root){
-                    throw new NotFoundHttpException('Layout not found');
-                    
+                    throw new NotFoundHttpException('Layout not found'); 
                 }
 
                 $route_params = $event->getRequest()->attributes->get('_route_params');

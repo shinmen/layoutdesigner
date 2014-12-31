@@ -32,8 +32,10 @@ class TemplateDesignerLayoutExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
         $container->setParameter('template_designer_layout.custom_param_template', $config['custom_param_template']);
+        $container->setParameter('template_designer_layout.assetic', $config['assetic']);
+        $container->setParameter('template_designer_layout.class_configuration', $config['class_configuration']);
         $container->setParameter('template_designer_layout.template_engine', $config['template_engine']);
-        $container->setParameter('template_designer_layout.edit_form_twig', $config['edit_form_twig']);
+        $container->setParameter('template_designer_layout.base_twig', $config['base_twig']);
         
         $engines = array_map(function ($engine) { return new Reference('templating.engine.'.$engine); }, $container->getParameter('templating.engines'));
         $container->setDefinition('templating.engine.delegating',new Definition('%templating.engine.delegating.class%',array(new Reference('service_container'),$engines)));

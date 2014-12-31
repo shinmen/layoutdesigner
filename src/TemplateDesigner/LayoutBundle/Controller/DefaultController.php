@@ -23,7 +23,7 @@ class DefaultController extends Controller
         $vroom = "vroom";
         // return $this->renderLayout('TemplateDesignerLayoutBundle:Default:index.html.twig',array('name'=>$name,'vroom'=>$vroom));
         // return array('name' => $name,'vroom'=>$vroom);
-        return $this->renderView('TemplateDesignerLayoutBundle:Default:index.html.twig',array('name'=>$name,'vroom'=>$vroom));
+        return $this->render('TemplateDesignerLayoutBundle:Default:index.html.twig',array('name'=>$name,'vroom'=>$vroom));
     }
 
     /**

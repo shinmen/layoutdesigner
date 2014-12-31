@@ -29,9 +29,9 @@ class LayoutController extends Controller
      */
     public function createAction()
     {
-        $edit_form_twig = $this->container->getParameter('template_designer_layout.edit_form_twig');
+        $edit_form_twig = $this->container->getParameter('template_designer_layout.base_twig');
         return array(
-            'edit_form_twig'=>$edit_form_twig
+            'base_twig'=>$edit_form_twig
         );
     }
 
@@ -74,13 +74,20 @@ class LayoutController extends Controller
      */
     public function editLayoutAction()
     {
-        $entity = new Layout();
-        $editForm = $this->createForm(new LayoutEditionType(),$entity);
-        $edit_form_twig = $this->container->getParameter('template_designer_layout.edit_form_twig');
+        // instances of layout choice form and entity from config
+        $config = $this->container->getParameter('template_designer_layout.class_configuration');
+        var_dump($config);
+        $class = new \ReflectionClass($config['entity']);
+        $entity = $class->newInstance();
+        $formClass =  new \ReflectionClass($config['layout_choice_form']);
+        $formType = $formClass->newInstance();
+
+        $editForm = $this->createForm($formType,$entity);
+        $edit_form_twig = $this->container->getParameter('template_designer_layout.base_twig');
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'edit_form_twig'=>$edit_form_twig
+            'base_twig'   => $edit_form_twig
         );
     }
 
@@ -141,12 +148,18 @@ class LayoutController extends Controller
     */
     private function createEditForm(Layout $entity)
     {
+        // options
         $routes = $this->get('route.manager')->getFormattedRoutesForForms();
         $templates = $this->get('template_finder')->getFormattedTemplateForForm();
         $helper = $this->get('layout.helper');
         $css = $helper->getAllCssClasses();
         $tags = $helper->getAllTags();
-        $form = $this->createForm(new LayoutType(), $entity, array(
+        // instance of layout edit form from config
+        $config = $this->container->getParameter('template_designer_layout.class_configuration');
+        $formClass =  new \ReflectionClass($config['layout_edit_form']);
+        $formType = $formClass->newInstance();
+
+        $form = $this->createForm($formType, $entity, array(
             'action' => $this->generateUrl('layout_update', array('id' => $entity->getId())),
             'method' => 'PUT',
             'routes' => $routes,
