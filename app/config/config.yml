@@ -72,7 +72,7 @@ swiftmailer:
 
 template_designer_layout:
     custom_param_template: TemplateDesignerLayoutBundle:Layout:renderHelp.html.twig
-    #template_engine: #default bootstrap
+    # template_engine: #default bootstrap
     # class_configuration:
     #     entity: Tool\ToolBundle\Entity\MyLayout
 

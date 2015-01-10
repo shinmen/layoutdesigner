@@ -7,9 +7,9 @@ use TemplateDesigner\LayoutBundle\Entity\Layout;
 /**
  * MyLayout
  */
-class MyLayout
+class MyLayout 
 {
     
-
+	protected $id;
 
 }

@@ -4,9 +4,10 @@ namespace TemplateDesigner\LayoutBundle\Service;
 use TemplateDesigner\LayoutBundle\Service\LayoutHelper\BootstrapHelper;
 use TemplateDesigner\LayoutBundle\Service\LayoutHelper\LayoutConfigurableInterface;
 use TemplateDesigner\LayoutBundle\Service\LayoutHelper\LayoutManipulableInterface;
+use TemplateDesigner\LayoutBundle\Service\LayoutHelper\LayoutValidationInterface;
 use Doctrine\ORM\EntityManager;
 
-class LayoutHelper implements LayoutConfigurableInterface, LayoutManipulableInterface{
+class LayoutHelper implements LayoutConfigurableInterface, LayoutManipulableInterface,LayoutValidationInterface{
 
 	private $engineParameter;
 	private $helper;
@@ -30,8 +31,8 @@ class LayoutHelper implements LayoutConfigurableInterface, LayoutManipulableInte
 		return $this->helper->extractClasses($cssClasses);
 	}
 
-	public function getContainerClass(){
-		return $this->helper->getContainerClass();
+	public function getWrappingClasses(){
+		return $this->helper->getWrappingClasses();
 	}
 
 	public function addChildToEntity($entity){
@@ -56,6 +57,10 @@ class LayoutHelper implements LayoutConfigurableInterface, LayoutManipulableInte
 		}
 		return $helper;
 	}
+
+	public function validateClasses($cssClasses){
+    	return $this->helper->validateClasses($cssClasses);
+    }
 
 
 }

@@ -81,6 +81,7 @@ function form_submit(elem){
         url: url,
         data: values,
     }).done(function(data){
+        $('#editLayout').html(data);
         displayTemplate({root:$('#templatedesigner_layoutbundle_layout_edition_root option:selected').val()},$('#showFullLayout'))
     });
     return false; 
@@ -96,7 +97,6 @@ function form_submit_add_child(elem){
         data: {parent:parent},
     }).done(function(data){
         refreshSelectSubsAndTemplate($("#templatedesigner_layoutbundle_layout_edition_root").val());
-        // displayTemplate({root:$('#templatedesigner_layoutbundle_layout_edition_root option:selected').val()},$('#showFullLayout'))
     });
     return false; 
 }

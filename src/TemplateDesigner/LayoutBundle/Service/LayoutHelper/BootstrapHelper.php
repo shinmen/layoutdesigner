@@ -3,16 +3,19 @@ namespace TemplateDesigner\LayoutBundle\Service\LayoutHelper;
 
 use TemplateDesigner\LayoutBundle\Service\LayoutHelper\LayoutConfigurableInterface;
 use TemplateDesigner\LayoutBundle\Service\LayoutHelper\LayoutManipulableInterface;
+use TemplateDesigner\LayoutBundle\Service\LayoutHelper\LayoutValidationInterface;
 use TemplateDesigner\LayoutBundle\Entity\Layout;
 
 
-class BootstrapHelper implements LayoutConfigurableInterface, LayoutManipulableInterface{
+class BootstrapHelper implements LayoutConfigurableInterface, LayoutManipulableInterface,LayoutValidationInterface{
 
     public function __construct($em){
         $this->em = $em;
     }
 
 	public function getAllCssClasses(){
+        $hiddens = array('hidden-xs'=>'Hidden Mobile','hidden-sm'=>'Hidden Tablet','hidden-md'=>'Hidden Desktop','hidden-lg'=>'Hidden Large Desktop');
+        $visibles = array('visible-xs-block'=>'Only visible Mobile','visible-sm-block'=>'Only visible Tablet','visible-md-block'=>'Only visible Desktop','visible-lg-block'=>'Only visible Large Desktop');
         $devices = array('col-xs-'=>'mobile','col-sm-'=>'tablet','col-md-'=>'desktop','col-lg-'=>'large desktop');
         $css = array('row'=>'row','container'=>'container');
         
@@ -22,6 +25,14 @@ class BootstrapHelper implements LayoutConfigurableInterface, LayoutManipulableI
                 $css[$device][$key.$value]= $value.' column(s)';
             }
         }
+        $css['hidden'] = array();
+        foreach ($hiddens as $key => $hidden) {
+            $css['hidden'][$key] = $hidden;
+        }
+        $css['only visible'] = array();
+        foreach ($visibles as $key => $visible) {
+            $css['only visible'][$key] = $visible;
+        }
         return $css;
 	}
 
@@ -29,8 +40,8 @@ class BootstrapHelper implements LayoutConfigurableInterface, LayoutManipulableI
 		return array('article'=>'article','div'=>'div','nav'=>'nav','section'=>'section');
 	}
 
-    public function getContainerClass(){
-        return 'container';
+    public function getWrappingClasses(){
+        return array('container','row','column');
     }
 	
 	public function extractClasses($cssClasses){
@@ -41,6 +52,16 @@ class BootstrapHelper implements LayoutConfigurableInterface, LayoutManipulableI
         if(empty($matches)){
             preg_match_all('/col-[a-z]+-[0-9]+/', $cssClasses,$matches);
             $matches[0][]='column';
+            if(preg_match_all('/hidden-[a-z]+/', $cssClasses, $hiddens)){
+                foreach ($hiddens[0] as $hidden) {
+                    $matches[0][] = $hidden;
+                }
+            }
+            if(preg_match_all('/visible-[a-z]+-[a-z]+/', $cssClasses, $visibles));{
+                foreach ($visibles[0] as $visible) {
+                    $matches[0][] = $visible;
+                }
+            }
         }
         return $matches;
 	}
@@ -121,6 +142,16 @@ class BootstrapHelper implements LayoutConfigurableInterface, LayoutManipulableI
 
         $classesWrapper[0] = $cssClasses;
         return $classesWrapper;
+    }
+
+    public function validateClasses($cssClasses){
+        $valid = false;
+        foreach ($cssClasses[0] as $key => $cssClass) {
+            if(strpos($cssClass, 'col')===0|| strpos($cssClass, 'row')===0|| strpos($cssClass, 'container')===0){
+                $valid = true;
+            }
+        }
+        return $valid;
     }
 
 	

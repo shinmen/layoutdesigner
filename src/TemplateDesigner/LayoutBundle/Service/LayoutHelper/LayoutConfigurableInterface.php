@@ -6,5 +6,5 @@ interface LayoutConfigurableInterface{
 
 	public function getAllCssClasses();
 	public function getAllTags();
-	public function getContainerClass();
+	public function getWrappingClasses();
 }

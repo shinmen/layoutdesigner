@@ -36,7 +36,7 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue('bootstrap')
                     ->validate()
                     ->ifNotInArray(array('bootstrap','foundation','squeleton'))
-                        ->thenInvalid('Invalid database driver "%s"')
+                        ->thenInvalid('Invalid template_engine "%s"')
                         ->end()
                     ->end()
                 ->end()
@@ -51,15 +51,6 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('entity')
                             ->defaultValue('TemplateDesigner\LayoutBundle\Entity\Layout')
-                            // ->validate()
-                            //     ->ifTrue(function ($v) { return (boolean) preg_match('/^[a-zA-Z\\]+$/', $v); })
-                            //     ->then(function ($v) {
-                            //         preg_match('/[a-zA-Z]+$/',$v,$match);
-                            //         $namespace = preg_replace(array('/\\\/','/Entity/'), '', $v);
-                            //         $bundle = $namespace.':'.$match[0];
-                            //         $v['entity_bundle'] = $bundle;
-                            //         return $v;})
-                            //     ->end()
                             ->end()
                         ->scalarNode('layout_choice_form')
                             ->defaultValue('TemplateDesigner\LayoutBundle\Form\LayoutEditionType')
@@ -67,9 +58,6 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('layout_edit_form')
                             ->defaultValue('TemplateDesigner\LayoutBundle\Form\LayoutType')
                             ->end()
-                        // ->scalarNode('entity_bundle')
-                        //     // ->defaultValue('TemplateDesignerLayoutBundle:Layout')
-                        //     ->end()
                     ->end()
                 ->end()
 

@@ -31,6 +31,6 @@
 
 #selectable .ui-selecting                       { background: #33374C; color: #FFF;}
 #selectable .ui-selected                        { background: #449D44; color: #FFF; }
-#selectable                                     { list-style-type: none; margin: 0; padding: 0; /*width: 10%;*/}
+#selectable                                     { list-style-type: none; margin: 0; padding: 0; }
 #selectable li                                  { margin: 3px; padding: 1px; float: left; width: 2.5em; height: 30px; font-size: 1em; text-align: center; }
 
