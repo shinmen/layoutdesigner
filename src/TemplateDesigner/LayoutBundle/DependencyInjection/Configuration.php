@@ -21,7 +21,7 @@ class Configuration implements ConfigurationInterface
         $treeBuilder->root('template_designer_layout')
             ->children()
                 ->booleanNode('assetic')
-                    ->defaultFalse()
+                    ->defaultTrue()
                     ->end()
                 ->end()
             ->children()
