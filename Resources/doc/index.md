@@ -22,6 +22,11 @@ public function registerBundles()
     // ...
 }
 ```
+Requirements:
+- jquery
+- jquery ui
+- twitter bootstrap V3
+None are included in the vendor
 
 # Configuration
 
