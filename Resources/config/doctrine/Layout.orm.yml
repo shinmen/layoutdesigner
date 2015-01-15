@@ -4,7 +4,7 @@ TemplateDesigner\LayoutBundle\Entity\Layout:
     repositoryClass: TemplateDesigner\LayoutBundle\Entity\LayoutRepository
     indexes:
         name:
-            columns: [ name,cssClasses ]
+            columns: [ name ]
     id:
         id:
             type: integer

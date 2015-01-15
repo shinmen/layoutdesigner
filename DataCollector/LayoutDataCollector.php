@@ -17,6 +17,7 @@ class LayoutDataCollector extends DataCollector
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {	
         $routeParams = $request->attributes->get('_route_params');
+        $this->data = array('layout' => null, 'cssAsset'=>$this->cssAsset);
         if(isset($routeParams['rootLayout'])){
 			$this->data = array('layout' => $routeParams['rootLayout'],'cssAsset'=>$this->cssAsset);
 		}
