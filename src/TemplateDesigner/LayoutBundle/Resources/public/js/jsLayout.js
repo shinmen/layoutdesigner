@@ -22,13 +22,11 @@ function addClassCol(elem,type){
 
 function addClassVisible(elem,type){
     $('#col').attr('data-class',$('#col').attr('data-class')+' visible-'+type+'-block').show();
-    // $('#col').addClass('visible-'+type+'-block');
     alertColumn(type+' visible');
 }
 
 function addClassHidden(elem,type){
     $('#col').attr('data-class',$('#col').attr('data-class')+' hidden-'+type).show();
-    // $('#col').addClass('hidden-'+type);
     alertColumn(type+' hidden');
 }
 
@@ -50,7 +48,84 @@ function createLayout(container,obj){
     };
 }
 
+// -------------- Layout edition ------------------
+function getSelectSubs(data,selector){
+   $.ajax({
+        type: 'POST',
+        url: urlSelectSub,
+        data: data,
+    }).done(function(data){
+        selector.html(data);
+    }); 
+}
+
+function displaySubForm(data,selector){
+    $.ajax({
+        type: 'POST',
+        url: urlDisplaySubForm,
+        data: data,
+    }).done(function(data){
+        selector.html(data);
+    });
+}
+
+function displayTemplate(data,selector){
+   $.ajax({
+        type: 'POST',
+        url: urlDisplayTemplate,
+        data: data,
+    }).done(function(data){
+        selector.html(data);
+    }); 
+}
+
+function refreshSelectSubsAndTemplate(root){
+   var $sub_selector = $('.childLayoutSelect');
+    var data = {root: root};
+    $.when(getSelectSubs(data,$sub_selector),displayTemplate(data,$('#showFullLayout'))).done(function(data1,data2){
+        $('#editLayout').html('');
+    }); 
+}
+
+function form_submit(elem){
+    var values = elem.serialize();
+    var url = elem.attr('action');
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: values,
+    }).done(function(data){
+        $('#editLayout').html(data);
+        displayTemplate({root:$('.parentLayoutSelect option:selected').val()},$('#showFullLayout'))
+    });
+    return false; 
+}
+
+function form_submit_add_child(elem){
+    var form = elem.closest('form');
+    var parent = $('.childLayoutSelect').val();
+    $.ajax({
+        type: 'POST',
+        url: urlFormSubmitAddChild,
+        data: {parent:parent},
+    }).done(function(data){
+        refreshSelectSubsAndTemplate($(".parentLayoutSelect").val());
+    });
+    return false; 
+}
+
 $(function() {
+    // Layout edition
+    $(".parentLayoutSelect").on('change',function(e){
+        refreshSelectSubsAndTemplate($(this).val());
+    });
+    $(".childLayoutSelect").on('change',function(e){
+        var selected = $('option:selected',this).val();
+        var data = {layout: selected};
+        displaySubForm(data,$('#editLayout'))
+    });
+
+    
 
     $('.toolbox form select').on('change',function(){
         node = $('option:selected',$(this)).val();
@@ -101,57 +176,22 @@ $(function() {
     }
 
     $( "#selectable" ).selectable();
-
-    $('.btn-ok-m').on('click',function(){
+    // columns
+    $('.btns-primary .btn').on('click',function(){
         $(this).fadeOut(500);
-        addClassCol($('.ui-selected'),'xs');
+        addClassCol($('.ui-selected'),$(this).attr('data-class'));
     })
-    $('.btn-ok-t').on('click',function(){
+    // hidden
+    $('.btns-hidden .btn').on('click',function(){
         $(this).fadeOut(500);
-        addClassCol($('.ui-selected'),'sm');
+        addClassHidden($('.ui-selected'),$(this).attr('data-class'));
     })
-    $('.btn-ok-d').on('click',function(){
+    // visible
+    $('.btns-visible .btn').on('click',function(){
         $(this).fadeOut(500);
-        addClassCol($('.ui-selected'),'md');
+        addClassVisible($('.ui-selected'),$(this).attr('data-class'));
     })
-    $('.btn-ok-ld').on('click',function(){
-        $(this).fadeOut(500);
-        addClassCol($('.ui-selected'),'lg');
-    })
-
-    $('.btn-ok-hm').on('click',function(){
-        $(this).fadeOut(500);
-        addClassHidden($('.ui-selected'),'xs');
-    })
-    $('.btn-ok-ht').on('click',function(){
-        $(this).fadeOut(500);
-        addClassHidden($('.ui-selected'),'sm');
-    })
-    $('.btn-ok-hd').on('click',function(){
-        $(this).fadeOut(500);
-        addClassHidden($('.ui-selected'),'md');
-    })
-    $('.btn-ok-hld').on('click',function(){
-        $(this).fadeOut(500);
-        addClassHidden($('.ui-selected'),'lg');
-    })
-
-    $('.btn-ok-vm').on('click',function(){
-        $(this).fadeOut(500);
-        addClassVisible($('.ui-selected'),'xs');
-    })
-    $('.btn-ok-vt').on('click',function(){
-        $(this).fadeOut(500);
-        addClassVisible($('.ui-selected'),'sm');
-    })
-    $('.btn-ok-vd').on('click',function(){
-        $(this).fadeOut(500);
-        addClassVisible($('.ui-selected'),'md');
-    })
-    $('.btn-ok-vld').on('click',function(){
-        $(this).fadeOut(500);
-        addClassVisible($('.ui-selected'),'lg');
-    })
+    
 
     $('.draggable').draggable(options_drag);
     $('.droppable').droppable(options_drop);
@@ -169,7 +209,14 @@ $(function() {
                 url:url,
                 data: {name:name, layout:layout}
             }).done(function(data){
-                alertColumn($btn.attr('data-success'));
+                if(data!=''){
+                   $('.alert-danger').fadeOut(500);
+                   for(error in data){
+                        $('.alert-danger').append('<div>'+data[error]+'</div>')
+                    } 
+                }else{
+                    alertColumn($btn.attr('data-success'));
+                }                
             })
         }
 

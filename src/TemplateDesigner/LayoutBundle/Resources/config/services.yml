@@ -23,6 +23,7 @@ services:
 
   layout.data_collector.action_listener:
         class: TemplateDesigner\LayoutBundle\DataCollector\LayoutDataCollector
+        arguments: ["%template_designer_layout.data_collector_css%"]
         tags:
             - { name: data_collector, template: %template_designer.layout_data_collector.template%, id: "layout" }
   route.manager:

@@ -36,8 +36,11 @@ class TemplateDesignerLayoutExtension extends Extension
         $container->setParameter('template_designer_layout.class_configuration', $config['class_configuration']);
         $container->setParameter('template_designer_layout.template_engine', $config['template_engine']);
         $container->setParameter('template_designer_layout.base_twig', $config['base_twig']);
+        $container->setParameter('template_designer_layout.data_collector_css', $config['data_collector_css']);
         
+        // find templating engines in config
         $engines = array_map(function ($engine) { return new Reference('templating.engine.'.$engine); }, $container->getParameter('templating.engines'));
+        // force use of templating.engine.delegating even if only one engine is defined
         $container->setDefinition('templating.engine.delegating',new Definition('%templating.engine.delegating.class%',array(new Reference('service_container'),$engines)));
 
         $container->setAlias('templating','templating.engine.delegating');

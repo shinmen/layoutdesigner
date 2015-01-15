@@ -7,10 +7,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use TemplateDesigner\LayoutBundle\Entity\Layout;
-use TemplateDesigner\LayoutBundle\Form\LayoutType;
-use TemplateDesigner\LayoutBundle\Form\LayoutEditionType;
 
 /**
  * Layout controller.
@@ -29,7 +26,9 @@ class LayoutController extends Controller
     public function createAction()
     {
         $edit_form_twig = $this->container->getParameter('template_designer_layout.base_twig');
-        return $this->render('TemplateDesignerLayoutBundle:Layout:create.html.twig',array('base_twig'=>$edit_form_twig));
+        $assetic = $this->container->getParameter('template_designer_layout.assetic');
+        $engine = $this->container->getParameter('template_designer_layout.template_engine');
+        return $this->render('TemplateDesignerLayoutBundle:Layout:create'.ucfirst($engine).'.html.twig',array('base_twig'=>$edit_form_twig,'template_assetic'=>$assetic));
     }
 
         /**
@@ -45,21 +44,27 @@ class LayoutController extends Controller
         $name = $request->get('name');
         $tag = $layout['tag'];
         $classes = $layout['cssClass'];
-        $children = $layout['children'];
+        $children = (isset($layout['children']))?$layout['children']:null;
 
         $root = $helper->transform($layout,$name,$classes,$tag);
         $errorList = $this->get('validator')->validate($root);
-        
+        $errors = '';
         if (count($errorList) == 0) {
             $em->flush($root);
-            $helper->recursiveTransform($children,$root,$root);
-            $i = 0;
-            foreach ($root->getSubs() as $sub) {
-                $sub->setPosition(++$i);
-                $em->flush($sub);
-            } 
+            if($children){
+               $helper->recursiveTransform($children,$root,$root);
+                $i = 0;
+                foreach ($root->getSubs() as $sub) {
+                    $sub->setPosition(++$i);
+                    $em->flush($sub);
+                }  
+            }
+        }else{
+            foreach ($errorList as $error) {
+                $errors[] = $error->getMessage();
+            }
         }
-        return new JsonResponse($errorList);
+        return new JsonResponse($errors);
     }
 
     /**
@@ -72,17 +77,22 @@ class LayoutController extends Controller
     {
         // instances of layout choice form and entity from config
         $config = $this->container->getParameter('template_designer_layout.class_configuration');
+        $engine = $this->container->getParameter('template_designer_layout.template_engine');
+        $edit_form_twig = $this->container->getParameter('template_designer_layout.base_twig');
+        $assetic = $this->container->getParameter('template_designer_layout.assetic');
+
         $class = new \ReflectionClass($config['entity']);
         $entity = $class->newInstance();
         $formClass =  new \ReflectionClass($config['layout_choice_form']);
         $formType = $formClass->newInstance();
 
         $editForm = $this->createForm($formType,$entity);
-        $edit_form_twig = $this->container->getParameter('template_designer_layout.base_twig');
-        return $this->render('TemplateDesignerLayoutBundle:Layout:editLayout.html.twig',array(
+        
+        return $this->render('TemplateDesignerLayoutBundle:Layout:editLayout'.ucfirst($engine).'.html.twig',array(
             'entity'    => $entity,
             'edit_form' => $editForm->createView(),
-            'base_twig' => $edit_form_twig
+            'base_twig' => $edit_form_twig,
+            'template_assetic' => $assetic
             ));
     }
 
@@ -91,13 +101,12 @@ class LayoutController extends Controller
      * Displays a form to edit an existing Layout entity.
      *
      * @Route("/edit_ajax/", name="layout_edit")
-     * @Template()
      */
     public function editAction(Request $request)
     {
         
         if(!$request->isXmlHttpRequest()){return $this->redirect($this->generateUrl('layout_edition'));}
-
+        $engine = $this->container->getParameter('template_designer_layout.template_engine');
         $em = $this->getDoctrine()->getManager();
         $id = $request->request->get('layout');
         $entity = $em->getRepository('TemplateDesignerLayoutBundle:Layout')->find($id);
@@ -107,7 +116,7 @@ class LayoutController extends Controller
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('TemplateDesignerLayoutBundle:Layout:edit.html.twig',array(
+        return $this->render('TemplateDesignerLayoutBundle:Layout:edit'.ucfirst($engine).'.html.twig',array(
             'entity'        => $entity,
             'edit_form'     => $editForm->createView(),
             'delete_form'   => $deleteForm->createView(),
@@ -175,14 +184,14 @@ class LayoutController extends Controller
     public function updateAction(Request $request, Layout $entity)
     {
         $em = $this->getDoctrine()->getManager();
-
+        $engine = $this->container->getParameter('template_designer_layout.template_engine');
         $deleteForm = $this->createDeleteForm($entity->getId());
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
         if ($editForm->isValid()) {
             $em->flush();
         }
-        return $this->render('TemplateDesignerLayoutBundle:Layout:edit.html.twig',array(
+        return $this->render('TemplateDesignerLayoutBundle:Layout:edit'.ucfirst($engine).'.html.twig',array(
             'entity'        => $entity,
             'edit_form'     => $editForm->createView(),
             'delete_form'   => $deleteForm->createView(),
@@ -200,6 +209,7 @@ class LayoutController extends Controller
         if(!$request->isXmlHttpRequest()){
             return $this->redirect($this->generateUrl('layout_edition'));
         }
+        $engine = $this->container->getParameter('template_designer_layout.template_engine');
         $em = $this->getDoctrine()->getManager();
         $helper = $this->get('layout.helper');
         $id = $request->request->get('parent');
@@ -214,7 +224,7 @@ class LayoutController extends Controller
         $newChild = $helper->addChildToEntity($entity);
         $em->flush();         
 
-        return $this->render('TemplateDesignerLayoutBundle:Layout:edit.html.twig',array(
+        return $this->render('TemplateDesignerLayoutBundle:Layout:edit'.ucfirst($engine).'.html.twig',array(
             'entity'        => $entity,
             'edit_form'     => $editForm->createView(),
             'delete_form'   => $deleteForm->createView(),
@@ -263,7 +273,6 @@ class LayoutController extends Controller
 
     /**
     * @Route("/sub_layout/ajax", name="select_subs")
-    * @Template()
     */
     public function selectSubsAction(Request $request)
     {

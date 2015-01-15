@@ -2,9 +2,6 @@
 namespace TemplateDesigner\LayoutBundle\Twig;
 
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\Templating\EngineInterface;
-use Symfony\Component\DependencyInjection\Container;
-use Symfony\Component\HttpFoundation\Response;
 
 class TwigExtension extends \Twig_Extension {
 

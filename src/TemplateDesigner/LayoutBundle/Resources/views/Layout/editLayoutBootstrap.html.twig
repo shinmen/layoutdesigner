@@ -1,0 +1,49 @@
+{% extends base_twig %}
+
+{% block stylesheets %}
+	{{parent()}}
+    {% if template_assetic is sameas(false)%}
+        <link rel="stylesheet" type="text/css" href="{{asset('bundles/templatedesignerlayout/css/styleLayoutWithPosition.css')}}">
+    {% endif %}
+{% endblock %}
+
+{% block body -%}
+    {% form_theme edit_form 'TemplateDesignerLayoutBundle:Form:common.html.twig'%}
+    <div class="container no-border">
+        <div class="row no-border">
+            <div class="col-xs-12 forms">
+                {{form_start(edit_form,{'attr':{'role':'form','onsubmit':'return form_submit($(this));'}})}}
+                {% for child in edit_form.children %}
+                    {% if loop.index is even %}
+                        <div class="col-xs-6">
+                            {{form_row(child)}}
+                        </div>
+                    {% else %}
+                        <div class="col-xs-6">
+                            {{form_row(child)}}
+                        </div>
+                    {% endif %} 
+                {% endfor %}
+                {{form_end(edit_form)}}
+            </div>
+            <div class="hidden flash"></div>
+            <div class="col-xs-12" id="editLayout"></div>
+        </div>
+    </div>
+
+    <div id="showFullLayout"></div>
+{% endblock %}
+
+{% block javascripts %}
+{{parent()}}
+<script type="text/javascript">
+    var urlSelectSub = '{{ path("select_subs") }}';
+    var urlDisplaySubForm = '{{ path("layout_edit") }}';
+    var urlDisplayTemplate = '{{ path("layout_show_layout") }}';
+    var urlFormSubmitAddChild = '{{path("layout_update_add")}}';
+</script>
+{% if template_assetic is sameas(false)%}
+    <script src="{{asset('bundles/templatedesignerlayout/js/jsLayout.js')}}"></script>
+{% endif %}
+{% endblock %}
+

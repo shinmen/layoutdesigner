@@ -146,7 +146,8 @@ class BootstrapHelper implements LayoutConfigurableInterface, LayoutManipulableI
 
     public function validateClasses($cssClasses){
         $valid = false;
-        foreach ($cssClasses[0] as $key => $cssClass) {
+        $classes = (is_array($cssClasses[0]))? $cssClasses[0]: $cssClasses;
+        foreach ($classes as $key => $cssClass) {
             if(strpos($cssClass, 'col')===0|| strpos($cssClass, 'row')===0|| strpos($cssClass, 'container')===0){
                 $valid = true;
             }

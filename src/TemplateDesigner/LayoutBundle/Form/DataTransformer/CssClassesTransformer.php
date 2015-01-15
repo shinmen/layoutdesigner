@@ -3,8 +3,6 @@ namespace TemplateDesigner\LayoutBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
-use Doctrine\Common\Persistence\ObjectManager;
-use TemplateDesigner\LayoutBundle\Model\Layout;
 
 class CssClassesTransformer implements DataTransformerInterface
 {

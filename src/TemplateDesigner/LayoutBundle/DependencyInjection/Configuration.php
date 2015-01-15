@@ -58,8 +58,25 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('layout_edit_form')
                             ->defaultValue('TemplateDesigner\LayoutBundle\Form\LayoutType')
                             ->end()
+                        ->end()
                     ->end()
                 ->end()
+            ->children()
+                ->arrayNode('data_collector_css')
+                        ->cannotBeEmpty()
+                        ->children()
+                        ->scalarNode('main')
+                            ->example('bundles/yourBundle/bootstrap/bootstrap-3.2.0-dist/css/bootstrap.min.css')
+                            ->isRequired() 
+                            ->end()
+                        ->scalarNode('optional')
+                            ->defaultNull()
+                            ->end()
+                        ->end()    
+                    ->end()
+                ->end()
+           
+                
 
         ;
 

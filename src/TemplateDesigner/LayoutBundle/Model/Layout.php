@@ -2,7 +2,6 @@
 
 namespace TemplateDesigner\LayoutBundle\Model;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\ExecutionContextInterface;
 

@@ -16,8 +16,11 @@
 
 {% block head %}
 	{{parent()}}
-    <link rel="stylesheet" type="text/css" href="{{asset('bundles/templatedesignerlayout/bootstrap/bootstrap-3.2.0-dist/css/bootstrap.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('bundles/templatedesignerlayout/css/styleLayoutWithPosition.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('{{collector.cssAsset["main"]}}')}}">
+    {% if collector.cssAsset["optional"] is defined %}
+        <link rel="stylesheet" type="text/css" href="{{asset('{{collector.cssAsset["optional"]}}')}}">
+    {% endif %}
 {% endblock %}
 
 {% block menu %}

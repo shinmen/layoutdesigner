@@ -2,13 +2,7 @@
 
 namespace TemplateDesigner\LayoutBundle\EventListener;
 
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\HttpKernel\HttpKernel;
-
-
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 

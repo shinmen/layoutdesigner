@@ -1,9 +1,6 @@
 <?php 
 namespace TemplateDesigner\LayoutBundle\Service;
 
-use Symfony\Component\Routing\Matcher\UrlMatcher;
-use Symfony\Component\Routing\RequestContext;
-use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\Router;
  
@@ -25,11 +22,19 @@ class RouteManager {
             $path = $route->getPath();
             $methods = $route->getMethods();
             $routeDefaults = $route->getDefaults();
+            // include route without '_' and without method or GET
             if(!strpos($path, '_') && (in_array('GET', $methods)||empty($methods)) ){
+                // value construction
+                preg_match("/^[\w\\\]+\\\Controller/", $routeDefaults['_controller'],$matches);
+                $patterns = array('/Controller/',"/\\\/",'/Bundle/');
+                $replacements = array('');
+                $prefix = preg_replace($patterns, $replacements, $matches[0]);
+                // key construction
                 $patterns = array('/Controller/',"/\\\/",'/::/','/Action/');
                 $replacements = array(':');
                 $action = preg_replace($patterns,$replacements,$routeDefaults['_controller']);
-                $formattedRoutes[$action]= $path; 
+                // route
+                $formattedRoutes[$action]= $prefix.$path; 
             }
         }
         return $formattedRoutes;

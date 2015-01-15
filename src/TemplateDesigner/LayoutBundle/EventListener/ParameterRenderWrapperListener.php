@@ -2,11 +2,8 @@
 namespace TemplateDesigner\LayoutBundle\EventListener;
 
 use TemplateDesigner\LayoutBundle\Templating\DelegatingEngineEvent;
-use TemplateDesigner\LayoutBundle\Templating\DelegatingEngineEvents;
 use TemplateDesigner\LayoutBundle\Templating\EventableDelegatingEngine;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 
 class ParameterRenderWrapperListener implements EventSubscriberInterface

@@ -1,8 +1,12 @@
 {% extends base_twig %}
+
 {% block stylesheets %}
-{{parent()}}
-<link rel="stylesheet" type="text/css" href="{{asset('bundles/templatedesignerlayout/css/styleLayout.css')}}">
+	{{parent()}}
+	{% if template_assetic is sameas(false)%}
+		<link rel="stylesheet" type="text/css" href="{{asset('bundles/templatedesignerlayout/css/styleLayout.css')}}">
+	{% endif %}
 {% endblock %}
+
 {% block body -%}
 
 <div class="toolbox">
@@ -28,22 +32,22 @@
 	<div class="clearfix"></div>
 	<div class="btns">
 		<div class="btns-primary">
-			<div class="btn btn-primary btn-xs btn-ok-m">{% trans %}Mobile{% endtrans %}</div>
-			<div class="btn btn-primary btn-xs btn-ok-t">{% trans %}Tablet{% endtrans %}</div>
-			<div class="btn btn-primary btn-xs btn-ok-d">{% trans %}Desktop{% endtrans %}</div>
-			<div class="btn btn-primary btn-xs btn-ok-ld">{% trans %}Large Desktop{% endtrans %}</div>
+			<div class="btn btn-primary btn-xs" data-class="xs">{% trans %}Mobile{% endtrans %}</div>
+			<div class="btn btn-primary btn-xs" data-class="sm">{% trans %}Tablet{% endtrans %}</div>
+			<div class="btn btn-primary btn-xs" data-class="md">{% trans %}Desktop{% endtrans %}</div>
+			<div class="btn btn-primary btn-xs" data-class="lg">{% trans %}Large Desktop{% endtrans %}</div>
 		</div>
 		<div class="btns-hidden">
-			<div class="btn btn-primary btn-xs btn-ok-hm">{% trans %}Hidden Mobile{% endtrans %}</div>
-			<div class="btn btn-primary btn-xs btn-ok-ht">{% trans %}Hidden Tablet{% endtrans %}</div>
-			<div class="btn btn-primary btn-xs btn-ok-hd">{% trans %}Hidden Desktop{% endtrans %}</div>
-			<div class="btn btn-primary btn-xs btn-ok-hld">{% trans %}Hidden Large Desktop{% endtrans %}</div>
+			<div class="btn btn-primary btn-xs" data-class="xs">{% trans %}Hidden Mobile{% endtrans %}</div>
+			<div class="btn btn-primary btn-xs" data-class="sm">{% trans %}Hidden Tablet{% endtrans %}</div>
+			<div class="btn btn-primary btn-xs" data-class="md">{% trans %}Hidden Desktop{% endtrans %}</div>
+			<div class="btn btn-primary btn-xs" data-class="lg">{% trans %}Hidden Large Desktop{% endtrans %}</div>
 		</div>
-		<div class="btns.visible">
-			<div class="btn btn-primary btn-xs btn-ok-vm">{% trans %}Only visible Mobile{% endtrans %}</div>
-			<div class="btn btn-primary btn-xs btn-ok-vt">{% trans %}Only visible Tablet{% endtrans %}</div>
-			<div class="btn btn-primary btn-xs btn-ok-vd">{% trans %}Only visible Desktop{% endtrans %}</div>
-			<div class="btn btn-primary btn-xs btn-ok-vld">{% trans %}Only visible Large Desktop{% endtrans %}</div>
+		<div class="btns-visible">
+			<div class="btn btn-primary btn-xs" data-class="xs">{% trans %}Only visible Mobile{% endtrans %}</div>
+			<div class="btn btn-primary btn-xs" data-class="sm">{% trans %}Only visible Tablet{% endtrans %}</div>
+			<div class="btn btn-primary btn-xs" data-class="md">{% trans %}Only visible Desktop{% endtrans %}</div>
+			<div class="btn btn-primary btn-xs" data-class="lg">{% trans %}Only visible Large Desktop{% endtrans %}</div>
 		</div>
 		<div class="clearfix"></div>
 	</div>
@@ -66,5 +70,7 @@
 {% endblock %}
 {% block javascripts %}
 {{parent()}}
-<script src="{{asset('bundles/templatedesignerlayout/js/jsLayout.js')}}"></script>
+{% if template_assetic is sameas(false)%}
+	<script src="{{asset('bundles/templatedesignerlayout/js/jsLayout.js')}}"></script>
+{% endif %}
 {% endblock %}

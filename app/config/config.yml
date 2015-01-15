@@ -72,6 +72,9 @@ swiftmailer:
 
 template_designer_layout:
     custom_param_template: TemplateDesignerLayoutBundle:Layout:renderHelp.html.twig
+    assetic: false
+    data_collector_css:  
+        main: bundles/templatedesignerlayout/bootstrap/bootstrap-3.2.0-dist/css/bootstrap.min.css
     # template_engine: #default bootstrap
     # class_configuration:
     #     entity: Tool\ToolBundle\Entity\MyLayout

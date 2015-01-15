@@ -5,7 +5,6 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Doctrine\ORM\EntityRepository;
-use TemplateDesigner\LayoutBundle\Entity\Layout;
  
 class AddSubLayoutFieldSubscriber implements EventSubscriberInterface
 {
@@ -33,6 +32,7 @@ class AddSubLayoutFieldSubscriber implements EventSubscriberInterface
             ),
             'empty_value'   => 'Select a sub layout',
             'label'         =>'Sub-Layout',
+            'attr'          => array('class'=>'childLayoutSelect'),
             'query_builder' => function (EntityRepository $repository) use ($root_id) {
                 $qb = $repository->createQueryBuilder('l')
                     ->join('l.root','r')

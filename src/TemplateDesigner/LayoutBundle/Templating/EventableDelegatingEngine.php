@@ -3,7 +3,6 @@ namespace TemplateDesigner\LayoutBundle\Templating;
 
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Templating\DelegatingEngine;
 use TemplateDesigner\LayoutBundle\Templating\DelegatingEngineEvent;

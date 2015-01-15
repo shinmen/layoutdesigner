@@ -1,7 +1,6 @@
 <?php
 namespace TemplateDesigner\LayoutBundle\EventListener;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use TemplateDesigner\LayoutBundle\Entity\Layout;
 
@@ -16,7 +15,6 @@ class LayoutDataListener{
 	public function prePersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        $entityManager = $args->getEntityManager();
 
         if ($entity instanceof Layout) {
             $entity->setEngine($this->engineParameter);
