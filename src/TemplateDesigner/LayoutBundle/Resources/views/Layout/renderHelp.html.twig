@@ -1,9 +1,0 @@
-
-{% if child.root.name == "root" and child.custom == "first" %}
-	{% include child.include with {name:params['name']} %}
-{% endif %}
-
-{% if child.root.name == "re" and child.custom == "second" %}
-	{% render(controller(child.render,{name:params['name']})) %}
-	{# {% include child.include with {name:params['name'],vroom:params['vroom']} %} #}
-{% endif %}

@@ -48,7 +48,7 @@ template_designer_layout:
     # base_twig : #from which to extends - default ::base.html.twig
     # class_configuration:
     #     layout_choice_form: #default TemplateDesigner\LayoutBundle\Form\LayoutEditionType
-    #	  layout_edit_form : #default TemplateDesigner\LayoutBundle\Form\LayoutType
+    #     layout_edit_form : #default TemplateDesigner\LayoutBundle\Form\LayoutType
 ```
 
 # Usage
@@ -73,7 +73,7 @@ namespace YourProject\DefaultBundle\Controller;
 use TemplateDesigner\LayoutBundle\Annotation\LayoutAnnotation;
 class DefaultController extends Controller
 {
-	/**
+    /**
      * @Route("/hello/{name}")
      * @LayoutAnnotation(name="test")
      */
@@ -87,14 +87,14 @@ class DefaultController extends Controller
 In your twig template, you call the twig function with the injected layout entity and your parameters
 ``` twig
 {% block body %}
-	{{render_layout(rootLayout.name,params)|raw}}
+    {{render_layout(rootLayout.name,params)|raw}}
 {% endblock %}
 ```
 
 When you need to access a parameter inside a block, you can use the custom_param_template
 ``` twig
 {% if child.root.name == "test" and child.custom == "custom name" %}
-	{% render(controller(child.render,{name:params['name']})) %}
+    {% render(controller(child.render,{name:params['name']})) %}
 {% endif %}
 ```
 ##Display Layout in toolbar
