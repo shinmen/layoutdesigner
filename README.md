@@ -52,7 +52,7 @@ template_designer_layout:
         #optional: # default null / other css if necessary
     # assetic : #default true
     # template_engine: #default bootstrap
-    # base_twig : #from which to extends - default ::base.html.twig
+    # base_twig : #from which to extend - default ::base.html.twig
     # class_configuration:
     #     layout_choice_form: #default TemplateDesigner\LayoutBundle\Form\LayoutEditionType
     #	  layout_edit_form : #default TemplateDesigner\LayoutBundle\Form\LayoutType

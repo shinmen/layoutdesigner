@@ -23,10 +23,11 @@ public function registerBundles()
 }
 ```
 Requirements:
-- jquery (<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>)
-- jquery ui (<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
-             <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>)
+- jquery (https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js)
+- jquery ui (https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css
+             https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js)
 - twitter bootstrap V3 (http://getbootstrap.com/getting-started/#download)
+
 None are included in the vendor
 
 # Configuration
@@ -51,7 +52,7 @@ template_designer_layout:
         #optional: # default null / other css if necessary
     # assetic : #default true
     # template_engine: #default bootstrap
-    # base_twig : #from which to extends - default ::base.html.twig
+    # base_twig : #from which to extend - default ::base.html.twig
     # class_configuration:
     #     layout_choice_form: #default TemplateDesigner\LayoutBundle\Form\LayoutEditionType
     #     layout_edit_form : #default TemplateDesigner\LayoutBundle\Form\LayoutType
