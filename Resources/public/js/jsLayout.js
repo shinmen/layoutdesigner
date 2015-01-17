@@ -210,7 +210,8 @@ $(function() {
                 data: {name:name, layout:layout}
             }).done(function(data){
                 if(data!=''){
-                   $('.alert-danger').fadeOut(500);
+                   $('.alert-danger').html();
+                   $('.alert-danger').show().fadeOut(4000);
                    for(error in data){
                         $('.alert-danger').append('<div>'+data[error]+'</div>')
                     } 

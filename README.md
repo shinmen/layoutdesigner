@@ -23,9 +23,10 @@ public function registerBundles()
 }
 ```
 Requirements:
-- jquery
-- jquery ui
-- twitter bootstrap V3
+- jquery (<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>)
+- jquery ui (<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+             <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>)
+- twitter bootstrap V3 (http://getbootstrap.com/getting-started/#download)
 None are included in the vendor
 
 # Configuration
@@ -54,6 +55,11 @@ template_designer_layout:
     # class_configuration:
     #     layout_choice_form: #default TemplateDesigner\LayoutBundle\Form\LayoutEditionType
     #	  layout_edit_form : #default TemplateDesigner\LayoutBundle\Form\LayoutType
+```
+
+Do not forget to install assets
+``` bash
+$ app/console assets:install web (--symlink)
 ```
 
 # Usage
@@ -95,6 +101,29 @@ In your twig template, you call the twig function with the injected layout entit
 	{{render_layout(rootLayout.name,params)|raw}}
 {% endblock %}
 ```
+
+If you need to display only one block in your template, you can use the position of the block to reference it:
+``` twig
+{% block body %}
+    {{render_layout(rootLayout.name,params,2)|raw}}
+{% endblock %}
+```
+
+You can choose not to display the container in your template:
+``` twig
+{% block body %}
+    {{render_layout(rootLayout.name,params,null,true)|raw}}
+{% endblock %}
+```
+Two additionnal twig functions are available to display only the html tags with ids, classes but no content. As shown above, you can set a position to display exactly the block you wish:
+``` twig
+{% block body %}
+    {{layoutStart ($rootName,$position=null)}}
+        content
+    {{layoutEnd ($rootName,$position=null)}}
+{% endblock %}
+```
+
 
 When you need to access a parameter inside a block, you can use the custom_param_template
 ``` twig
