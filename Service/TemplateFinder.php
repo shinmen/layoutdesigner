@@ -22,6 +22,7 @@ class TemplateFinder {
             $rawFirstPart = preg_replace('/Resources\/views/', '', $first_matches[0]);
             $valueFirstPart = preg_replace('/Bundle/', '', $rawFirstPart);
             $keyFirstPart = preg_replace('/\//', '', $rawFirstPart);
+            if(substr_count($rawFirstPart, '/')< 2 ){$keyFirstPart.=':';}
             $keyFirstPart.=':';
 
             preg_match('/Resources\/views\/[a-zA-Z\/\.]+$/', $file->getRelativePathname(),$second_matches);
