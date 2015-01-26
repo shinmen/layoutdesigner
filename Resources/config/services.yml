@@ -1,57 +1,67 @@
 parameters:
     template_designer.layout_data_collector.template:  "TemplateDesignerLayoutBundle:DataCollector:template"
     templating.engine.delegating.class: TemplateDesigner\LayoutBundle\Templating\EventableDelegatingEngine
+    layout.twig.extension.class: TemplateDesigner\LayoutBundle\Twig\TwigExtension
+    layout.params.action_listener.class: TemplateDesigner\LayoutBundle\EventListener\ParameterWrapperListener
+    layout.annotation.action_listener.class: TemplateDesigner\LayoutBundle\EventListener\LayoutAnnotationListener
+    layout.data_collector.action_listener.class: TemplateDesigner\LayoutBundle\DataCollector\LayoutDataCollector
+    route.manager.class: TemplateDesigner\LayoutBundle\Service\RouteManager
+    template_finder.class: TemplateDesigner\LayoutBundle\Service\TemplateFinder
+    layout.doctrine.listener.class: TemplateDesigner\LayoutBundle\EventListener\LayoutDataListener
+    layout.helper.class: TemplateDesigner\LayoutBundle\Service\LayoutHelper
+    layout.event_listener.render_wrapper_subscriber.class: TemplateDesigner\LayoutBundle\EventListener\ParameterRenderWrapperListener
+    layout.validator.classes.class: TemplateDesigner\LayoutBundle\Validator\Constraints\ContainsCorrectClassesValidator
 
 services:
   layout.twig.extension:
-    class: TemplateDesigner\LayoutBundle\Twig\TwigExtension
+    class: %layout.twig.extension.class%
     arguments: ["@doctrine.orm.entity_manager","%template_designer_layout.custom_param_template%"]
     tags:
       - { name: twig.extension }
 
   layout.params.action_listener:
-        class: TemplateDesigner\LayoutBundle\EventListener\ParameterWrapperListener
+        class: %layout.params.action_listener.class%
         arguments: ["@templating"]
         tags:
             - { name: kernel.event_listener, event: kernel.view, method: onKernelView }
 
   layout.annotation.action_listener:
-        class: TemplateDesigner\LayoutBundle\EventListener\LayoutAnnotationListener
+        class: %layout.annotation.action_listener.class%
         arguments: ["@annotation_reader","@doctrine.orm.entity_manager"]
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
 
   layout.data_collector.action_listener:
-        class: TemplateDesigner\LayoutBundle\DataCollector\LayoutDataCollector
+        class: %layout.data_collector.action_listener.class%
         arguments: ["%template_designer_layout.data_collector_css%"]
         tags:
             - { name: data_collector, template: %template_designer.layout_data_collector.template%, id: "layout" }
   route.manager:
-        class: TemplateDesigner\LayoutBundle\Service\RouteManager
+        class: %route.manager.class%
         arguments: ["@router"]
 
   template_finder:
-        class: TemplateDesigner\LayoutBundle\Service\TemplateFinder
+        class: %template_finder.class%
         arguments: ["%kernel.root_dir%"]
 
   layout.doctrine.listener:
-        class: TemplateDesigner\LayoutBundle\EventListener\LayoutDataListener
+        class: %layout.doctrine.listener.class%
         arguments: ["%template_designer_layout.template_engine%"]
         tags:
             - { name: doctrine.event_listener, event: prePersist }
 
   layout.helper:
-        class: TemplateDesigner\LayoutBundle\Service\LayoutHelper
+        class: %layout.helper.class%
         arguments: ["@doctrine.orm.entity_manager","%template_designer_layout.template_engine%"]
 
   layout.event_listener.render_wrapper_subscriber:
-        class: TemplateDesigner\LayoutBundle\EventListener\ParameterRenderWrapperListener
+        class: %layout.event_listener.render_wrapper_subscriber.class%
         tags:
             #- { name: kernel.event_subscriber }
             - { name: kernel.event_listener, event: eventable_delegating_engine.pre_render, method: onPreRender }
 
   layout.validator.classes:
-        class: TemplateDesigner\LayoutBundle\Validator\Constraints\ContainsCorrectClassesValidator
+        class: %layout.validator.classes.class%
         arguments: ["@layout.helper"]
         tags:
             - { name: validator.constraint_validator, alias: layout_classes.validator }
